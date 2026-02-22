@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -22,87 +23,214 @@
         }
     </script>
     <style>
-        body { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-        .active-tab { color: #dc2626; }
-        .active-tab i { font-weight: bold; }
-        .tap-scale:active { transform: scale(0.96); transition: transform 0.05s; }
-        .fade-in { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
+        body {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .active-tab {
+            color: #dc2626;
+        }
+
+        .active-tab i {
+            font-weight: bold;
+        }
+
+        .tap-scale:active {
+            transform: scale(0.96);
+            transition: transform 0.05s;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .stepper-btn {
-            display: flex; align-items: center; justify-content: center;
-            width: 44px; height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
-            font-size: 1.25rem; font-weight: 900;
+            font-size: 1.25rem;
+            font-weight: 900;
             transition: all 0.1s;
         }
-        
-        .btn-gray { background-color: #f3f4f6; color: #4b5563; }
-        .btn-gray:active { background-color: #e5e7eb; }
-        .btn-red { background-color: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
-        
-        .dark .btn-gray { background-color: #334155; color: #e2e8f0; }
-        .dark .btn-gray:active { background-color: #475569; }
-        .dark .btn-red { background-color: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
 
-        .timer-btn { transition: all 0.2s; border-width: 2px; }
-        .timer-selected { background-color: #dc2626; color: white; border-color: #dc2626; }
-        .dark .timer-selected { background-color: #991b1b; color: white; border-color: #991b1b; }
-        .timer-inactive { background-color: transparent; color: #6b7280; border-color: #e5e7eb; }
-        .dark .timer-inactive { background-color: #1e293b; color: #9ca3af; border-color: #374151; }
+        .btn-gray {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-gray:active {
+            background-color: #e5e7eb;
+        }
+
+        .btn-red {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fee2e2;
+        }
+
+        .dark .btn-gray {
+            background-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .dark .btn-gray:active {
+            background-color: #475569;
+        }
+
+        .dark .btn-red {
+            background-color: #450a0a;
+            color: #fca5a5;
+            border-color: #7f1d1d;
+        }
+
+        .timer-btn {
+            transition: all 0.2s;
+            border-width: 2px;
+        }
+
+        .timer-selected {
+            background-color: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .dark .timer-selected {
+            background-color: #991b1b;
+            color: white;
+            border-color: #991b1b;
+        }
+
+        .timer-inactive {
+            background-color: transparent;
+            color: #6b7280;
+            border-color: #e5e7eb;
+        }
+
+        .dark .timer-inactive {
+            background-color: #1e293b;
+            color: #9ca3af;
+            border-color: #374151;
+        }
 
         .spinner {
-            border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid white;
-            width: 20px; height: 20px; animation: spin 1s linear infinite;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        #visual-modal { transition: opacity 0.2s ease-in-out, pointer-events 0.2s; }
-        #visual-modal.hidden { opacity: 0; pointer-events: none; }
-        #visual-modal.flex { opacity: 1; pointer-events: auto; }
-        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #visual-modal {
+            transition: opacity 0.2s ease-in-out, pointer-events 0.2s;
+        }
+
+        #visual-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #visual-modal.flex {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         /* Vacation Mode Styles */
-        .vacation-mode .header-bg { background-color: #eff6ff; border-color: #bfdbfe; }
-        .dark.vacation-mode .header-bg { background-color: #172554; border-color: #1e3a8a; }
-        .vacation-mode #bottom-nav { display: none !important; }
+        .vacation-mode .header-bg {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .dark.vacation-mode .header-bg {
+            background-color: #172554;
+            border-color: #1e3a8a;
+        }
+
+        .vacation-mode #bottom-nav {
+            display: none !important;
+        }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-darkbg min-h-screen text-gray-900 dark:text-gray-100 font-sans pb-40 selection:bg-red-200 transition-colors duration-300">
+
+<body
+    class="bg-gray-50 dark:bg-darkbg min-h-screen text-gray-900 dark:text-gray-100 font-sans pb-40 selection:bg-red-200 transition-colors duration-300">
 
     <!-- HEADER -->
-    <div id="main-header" class="header-bg sticky top-0 z-40 bg-white/95 dark:bg-darkbg/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+    <div id="main-header"
+        class="header-bg sticky top-0 z-40 bg-white/95 dark:bg-darkbg/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
         <div class="px-4 py-3">
             <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h1 class="text-xl font-black tracking-tighter text-gray-900 dark:text-white flex items-center gap-2">
+                    <h1
+                        class="text-xl font-black tracking-tighter text-gray-900 dark:text-white flex items-center gap-2">
                         <span id="app-title">PPL <span class="text-red-600">PRO</span></span>
-                        <span id="vacation-badge" class="hidden text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full uppercase tracking-wide">Vacation</span>
+                        <span id="vacation-badge"
+                            class="hidden text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full uppercase tracking-wide">Vacation</span>
                     </h1>
-                    <div id="sync-status" class="flex items-center gap-2 text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">
-                        <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="status-dot"></div> 
+                    <div id="sync-status"
+                        class="flex items-center gap-2 text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">
+                        <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="status-dot"></div>
                         <span id="status-text">Connecting...</span>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleVacationMode()" class="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
+                    <button onclick="toggleVacationMode()"
+                        class="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
                         <i id="vacation-icon" class="ph-bold ph-airplane-tilt"></i>
                     </button>
-                    <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                    <button onclick="toggleDarkMode()"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
                         <i id="theme-icon" class="ph-bold ph-moon"></i>
                     </button>
                     <!-- Click time to pause -->
-                    <div onclick="toggleTimerState()" id="timer-display" class="text-5xl font-mono font-black text-gray-800 dark:text-gray-100 leading-none tracking-tight cursor-pointer active:opacity-70">00:00</div>
+                    <div onclick="toggleTimerState()" id="timer-display"
+                        class="text-5xl font-mono font-black text-gray-800 dark:text-gray-100 leading-none tracking-tight cursor-pointer active:opacity-70">
+                        00:00</div>
                 </div>
             </div>
-            
+
             <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar items-center">
                 <span class="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase mr-1">Auto-Rest:</span>
-                <button onclick="setRestTime(60)" id="t-60" class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">60s</button>
-                <button onclick="setRestTime(90)" id="t-90" class="timer-btn timer-selected text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">90s</button>
-                <button onclick="setRestTime(120)" id="t-120" class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">2m</button>
-                <button onclick="setRestTime(300)" id="t-300" class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">5m</button>
+                <button onclick="setRestTime(60)" id="t-60"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">60s</button>
+                <button onclick="setRestTime(90)" id="t-90"
+                    class="timer-btn timer-selected text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">90s</button>
+                <button onclick="setRestTime(120)" id="t-120"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">2m</button>
+                <button onclick="setRestTime(300)" id="t-300"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">5m</button>
             </div>
         </div>
     </div>
@@ -111,19 +239,28 @@
     <main id="main-container" class="p-4 max-w-xl mx-auto space-y-6 fade-in"></main>
 
     <!-- VISUAL MODAL -->
-    <div id="visual-modal" class="hidden fixed inset-0 z-50 bg-black/90 items-center justify-center p-6 backdrop-blur-sm">
-        <div class="bg-white dark:bg-darkcard w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[80vh]">
-            <div class="flex justify-between items-center p-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-darkcard sticky top-0 z-10">
-                <h3 id="modal-title" class="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tight truncate pr-4">Exercise</h3>
-                <button onclick="closeModal()" class="p-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500 dark:text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors flex-shrink-0">
+    <div id="visual-modal"
+        class="hidden fixed inset-0 z-50 bg-black/90 items-center justify-center p-6 backdrop-blur-sm">
+        <div
+            class="bg-white dark:bg-darkcard w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[80vh]">
+            <div
+                class="flex justify-between items-center p-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-darkcard sticky top-0 z-10">
+                <h3 id="modal-title"
+                    class="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tight truncate pr-4">
+                    Exercise</h3>
+                <button onclick="closeModal()"
+                    class="p-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500 dark:text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors flex-shrink-0">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
-            <div class="flex-1 bg-white dark:bg-black flex items-center justify-center overflow-hidden relative min-h-[300px]">
-                <img id="visual-img" src="" alt="Exercise Visual" class="w-full h-full object-contain" onerror="handleImageError(this)">
+            <div
+                class="flex-1 bg-white dark:bg-black flex items-center justify-center overflow-hidden relative min-h-[300px]">
+                <img id="visual-img" src="" alt="Exercise Visual" class="w-full h-full object-contain"
+                    onerror="handleImageError(this)">
             </div>
             <div class="p-4 bg-white dark:bg-darkcard">
-                <button onclick="searchGoogleImages()" class="w-full py-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-2xl font-bold text-sm uppercase tracking-wide shadow-sm tap-scale flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                <button onclick="searchGoogleImages()"
+                    class="w-full py-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-2xl font-bold text-sm uppercase tracking-wide shadow-sm tap-scale flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                     <i class="ph-bold ph-magnifying-glass"></i> Search Alternatives
                 </button>
             </div>
@@ -131,20 +268,25 @@
     </div>
 
     <!-- BOTTOM NAV (HIDDEN IN VACATION MODE) -->
-    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white dark:bg-darkbg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-40 pb-safe pt-2 shadow-[0_-5px_30px_rgba(0,0,0,0.05)] transition-colors duration-300">
-        <button onclick="setView('Push')" id="nav-Push" class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+    <nav id="bottom-nav"
+        class="fixed bottom-0 left-0 right-0 bg-white dark:bg-darkbg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-40 pb-safe pt-2 shadow-[0_-5px_30px_rgba(0,0,0,0.05)] transition-colors duration-300">
+        <button onclick="setView('Push')" id="nav-Push"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
             <i class="ph-bold ph-barbell text-2xl"></i>
             <span class="text-[10px] font-black uppercase tracking-wide">Push</span>
         </button>
-        <button onclick="setView('Pull')" id="nav-Pull" class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+        <button onclick="setView('Pull')" id="nav-Pull"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
             <i class="ph-bold ph-rows text-2xl"></i>
             <span class="text-[10px] font-black uppercase tracking-wide">Pull</span>
         </button>
-        <button onclick="setView('Legs')" id="nav-Legs" class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+        <button onclick="setView('Legs')" id="nav-Legs"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
             <i class="ph-bold ph-lightning text-2xl"></i>
             <span class="text-[10px] font-black uppercase tracking-wide">Legs</span>
         </button>
-        <button onclick="setView('History')" id="nav-History" class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+        <button onclick="setView('History')" id="nav-History"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
             <i class="ph-bold ph-chart-line-up text-2xl"></i>
             <span class="text-[10px] font-black uppercase tracking-wide">Logs</span>
         </button>
@@ -152,55 +294,55 @@
 
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_8B47oHmqDK05ZnaAlMX8GQlvmsxGJoZy74K2HS9aFNvgME-wNAYa6Cf1nXGLIi5IBg/exec";
-        
+
         // --- GYM WORKOUTS ---
         const gymWorkouts = {
             "Push": [
-                { name: "DB Flat Bench", sets: 4, range: "8-12", img: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Dumbbell-bench-press.gif" }, 
-                { name: "Seated DB Press", sets: 3, range: "8-12", img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Shoulder_press_dumbbell.gif" }, 
-                { name: "Incline DB Flys", sets: 3, range: "12-15", img: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Dumbbell-incline-fly.png" }, 
-                { name: "Lateral Raises", sets: 4, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Dumbbell-lateral-raise.gif/320px-Dumbbell-lateral-raise.gif" }, 
-                { name: "Skull Crushers", sets: 3, range: "12-15", img: "https://upload.wikimedia.org/wikipedia/commons/0/07/Dumbbell-triceps-extension.gif" },
-                { name: "Banded Pushdowns", sets: 3, range: "20", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Triceps-pushdown-v-bar.gif/320px-Triceps-pushdown-v-bar.gif" }
+                { name: "DB Flat Bench", sets: 4, range: "8-12", img: "https://wger.de/media/exercise-images/97/Dumbbell-bench-press-1.png", search: "dumbbell bench press" },
+                { name: "Seated DB Press", sets: 3, range: "8-12", img: "https://wger.de/media/exercise-images/123/dumbbell-shoulder-press-large-1.png", search: "seated dumbbell shoulder press" },
+                { name: "Incline DB Flys", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/1643/a6a603e9-a83a-4106-92a7-7d32e1b64c68.webp", search: "incline dumbbell fly" },
+                { name: "Lateral Raises", sets: 4, range: "15-20", img: "https://wger.de/media/exercise-images/148/lateral-dumbbell-raises-large-2.png", search: "lateral raises" },
+                { name: "Skull Crushers", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/84/Lying-close-grip-triceps-press-to-chin-1.png", search: "skull crushers" },
+                { name: "Banded Pushdowns", sets: 3, range: "20", img: "https://wger.de/media/exercise-images/1185/c5ca283d-8958-4fd8-9d59-a3f52a3ac66b.jpg", search: "tricep pushdown" }
             ],
             "Pull": [
-                { name: "Pull-Ups", sets: 4, range: "Max", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Pull-up_movement.gif" }, 
-                { name: "One-Arm Row", sets: 3, range: "8-10", img: "https://upload.wikimedia.org/wikipedia/commons/5/52/Dumbbell-row.gif" }, 
-                { name: "DB Pullovers", sets: 3, range: "12-15", img: "https://upload.wikimedia.org/wikipedia/commons/5/59/Dumbbell-pullover.gif" }, 
-                { name: "Rear Delt Flys", sets: 4, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Reverse-fly.gif" }, 
-                { name: "Bicep Curls", sets: 3, range: "10-12", img: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Dumbbell-biceps-curl.gif" }, 
-                { name: "Hammer Curls", sets: 3, range: "12", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Hammer-curl.gif/320px-Hammer-curl.gif" }
+                { name: "Pull-Ups", sets: 4, range: "Max", img: "https://wger.de/media/exercise-images/475/b0554016-16fd-4dbe-be47-a2a17d16ae0e.jpg", search: "pull ups" },
+                { name: "One-Arm Row", sets: 3, range: "8-10", img: "https://wger.de/media/exercise-images/81/a751a438-ae2d-4751-8d61-cef0e9292174.png", search: "one arm dumbbell row" },
+                { name: "DB Pullovers", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/192/Bench-press-1.png", search: "dumbbell pullover" },
+                { name: "Rear Delt Flys", sets: 4, range: "15-20", img: "https://wger.de/media/exercise-images/829/ad724e5c-b1ed-49e8-9279-a17545b0dd0b.png", search: "rear delt fly" },
+                { name: "Bicep Curls", sets: 3, range: "10-12", img: "https://wger.de/media/exercise-images/81/Biceps-curl-1.png", search: "dumbbell bicep curl" },
+                { name: "Hammer Curls", sets: 3, range: "12", img: "https://wger.de/media/exercise-images/86/Bicep-hammer-curl-1.png", search: "hammer curl" }
             ],
             "Legs": [
-                { name: "Goblet Squats", sets: 4, range: "10-12", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.svg" }, 
-                { name: "Bulgarian Splits", sets: 3, range: "8-12", img: "https://upload.wikimedia.org/wikipedia/commons/2/23/Dumbbell-lunge.gif" }, 
-                { name: "DB RDLs", sets: 4, range: "10-12", img: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Romanian-deadlift.gif" }, 
-                { name: "DB Lunges", sets: 3, range: "20", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Lunge.svg/320px-Lunge.svg.png" }, 
-                { name: "Calf Raises", sets: 5, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Calf-raise.gif" }
+                { name: "Goblet Squats", sets: 4, range: "10-12", img: "https://wger.de/media/exercise-images/203/1c052351-2af0-4227-aeb0-244008e4b0a8.jpeg", search: "goblet squat" },
+                { name: "Bulgarian Splits", sets: 3, range: "8-12", img: "https://wger.de/media/exercise-images/1706/0c5243cc-2539-4005-aee0-d3a8c5d3a32c.jfif", search: "bulgarian split squat" },
+                { name: "DB RDLs", sets: 4, range: "10-12", img: "https://wger.de/media/exercise-images/1652/0306c8c0-70cc-45d4-92de-6fa72ceaa834.webp", search: "dumbbell romanian deadlift" },
+                { name: "DB Lunges", sets: 3, range: "20", img: "https://wger.de/media/exercise-images/113/Walking-lunges-1.png", search: "dumbbell lunge" },
+                { name: "Calf Raises", sets: 5, range: "15-20", img: "https://wger.de/media/exercise-images/622/9a429bd0-afd3-4ad0-8043-e9beec901c81.jpeg", search: "standing calf raise" }
             ]
         };
 
         // --- VACATION WORKOUTS (BANDS/BW) ---
         const vacationWorkouts = {
             "FullBody": [
-                { name: "Bodyweight Squats", sets: 4, range: "20-25", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Squats.svg" },
-                { name: "Push-Ups", sets: 3, range: "Max", img: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Push-up.gif" },
-                { name: "Lunges", sets: 3, range: "15/side", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Lunge.svg/320px-Lunge.svg.png" },
-                { name: "Band Rows", sets: 4, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Seated-row.gif" },
-                { name: "Band Shoulder Press", sets: 3, range: "12-15", img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Shoulder_press_dumbbell.gif" },
-                { name: "Band Bicep Curls", sets: 3, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Dumbbell-biceps-curl.gif" },
-                { name: "Band Tricep Press", sets: 3, range: "15-20", img: "https://upload.wikimedia.org/wikipedia/commons/0/07/Dumbbell-triceps-extension.gif" },
-                { name: "Plank", sets: 3, range: "60s", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Plank_position.svg/640px-Plank_position.svg.png" }
+                { name: "Bodyweight Squats", sets: 4, range: "20-25", img: "https://wger.de/media/exercise-images/203/1c052351-2af0-4227-aeb0-244008e4b0a8.jpeg", search: "bodyweight squat" },
+                { name: "Push-Ups", sets: 3, range: "Max", img: "https://wger.de/media/exercise-images/1551/a6a9e561-3965-45c6-9f2b-ee671e1a3a45.png", search: "push ups" },
+                { name: "Lunges", sets: 3, range: "15/side", img: "https://wger.de/media/exercise-images/113/Walking-lunges-1.png", search: "lunges" },
+                { name: "Band Rows", sets: 4, range: "15-20", img: "https://wger.de/media/exercise-images/81/a751a438-ae2d-4751-8d61-cef0e9292174.png", search: "resistance band row" },
+                { name: "Band Shoulder Press", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/123/dumbbell-shoulder-press-large-1.png", search: "band shoulder press" },
+                { name: "Band Bicep Curls", sets: 3, range: "15-20", img: "https://wger.de/media/exercise-images/81/Biceps-curl-1.png", search: "band bicep curl" },
+                { name: "Band Tricep Press", sets: 3, range: "15-20", img: "https://wger.de/media/exercise-images/84/Lying-close-grip-triceps-press-to-chin-1.png", search: "band tricep extension" },
+                { name: "Plank", sets: 3, range: "60s", img: "https://wger.de/media/exercise-images/1551/a6a9e561-3965-45c6-9f2b-ee671e1a3a45.png", search: "plank" }
             ]
         };
 
         const bowflexWeights = [5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 30, 35, 40, 45, 50, 52.5, 55, 60, 65, 70, 75, 80, 85, 90];
-        
+
         let activeWorkouts = gymWorkouts;
         let isVacationMode = localStorage.getItem('vacationMode') === 'true';
         let timerInterval, cachedLogs = null, isSaving = false, currentDay = 'Push', lastWorkoutMode = 'Push';
-        let cloudHistory = {}; 
-        
+        let cloudHistory = {};
+
         let currentExerciseName = '';
         let defaultRestTime = 90;
         let timerRunning = false;
@@ -221,7 +363,7 @@
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.value = 880; gain.gain.value = 0.1;
-            osc.start(); setTimeout(() => osc.stop(), 500); 
+            osc.start(); setTimeout(() => osc.stop(), 500);
             if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
         }
 
@@ -244,16 +386,16 @@
                 localStorage.setItem('theme', 'dark');
                 document.getElementById('theme-icon').classList.replace('ph-moon', 'ph-sun');
             }
-            if(currentDay === 'History') renderHistory(document.getElementById('main-container'));
+            if (currentDay === 'History') renderHistory(document.getElementById('main-container'));
         }
 
         function toggleVacationMode() {
             isVacationMode = !isVacationMode;
             localStorage.setItem('vacationMode', isVacationMode);
             applyVacationMode();
-            updateMap(); 
+            updateMap();
             if (isVacationMode) setView('FullBody');
-            else setView(lastWorkoutMode); 
+            else setView(lastWorkoutMode);
         }
 
         function applyVacationMode() {
@@ -261,7 +403,7 @@
             const badge = document.getElementById('vacation-badge');
             const icon = document.getElementById('vacation-icon');
             const bottomNav = document.getElementById('bottom-nav');
-            
+
             if (isVacationMode) {
                 activeWorkouts = vacationWorkouts;
                 body.classList.add('vacation-mode');
@@ -269,14 +411,14 @@
                 icon.className = "ph-fill ph-airplane-tilt text-blue-600";
                 document.getElementById('status-text').innerText = "Vacation (Local Only)";
                 document.getElementById('status-dot').className = "w-2 h-2 rounded-full bg-blue-500";
-                if(bottomNav) bottomNav.style.display = 'none';
+                if (bottomNav) bottomNav.style.display = 'none';
             } else {
                 activeWorkouts = gymWorkouts;
                 body.classList.remove('vacation-mode');
                 badge.classList.add('hidden');
                 icon.className = "ph-bold ph-airplane-tilt";
                 document.getElementById('status-text').innerText = "Connecting...";
-                if(bottomNav) bottomNav.style.display = "flex"; 
+                if (bottomNav) bottomNav.style.display = "flex";
             }
         }
 
@@ -285,10 +427,10 @@
             applyVacationMode();
             updateMap();
             setRestTime(defaultRestTime);
-            
+
             const today = new Date().toDateString();
             const lastActiveDate = localStorage.getItem('Last-Activity-Date');
-            
+
             if (lastActiveDate !== today) {
                 Object.keys(localStorage).forEach(key => {
                     if (key.startsWith('R-')) localStorage.removeItem(key);
@@ -301,7 +443,7 @@
                     const res = await fetch(SCRIPT_URL);
                     const data = await res.json();
                     cachedLogs = data;
-                    
+
                     for (let i = data.length - 1; i >= 0; i--) {
                         const row = data[i];
                         if (!cloudHistory[row[1]] && row[2] > 0) {
@@ -309,12 +451,12 @@
                             cloudHistory[row[1]] = { weight: row[2], totalReps: Math.round(totalReps) };
                         }
                     }
-                    
+
                     let nextRoutine = 'Push';
                     let statusMsg = "System Ready";
                     if (data.length > 0) {
                         const lastRow = data[data.length - 1];
-                        const lastCategory = exerciseCategoryMap[lastRow[1]]; 
+                        const lastCategory = exerciseCategoryMap[lastRow[1]];
                         if (lastCategory) {
                             if (lastCategory === 'Push') nextRoutine = 'Pull';
                             else if (lastCategory === 'Pull') nextRoutine = 'Legs';
@@ -328,10 +470,10 @@
                 } else {
                     setView('FullBody');
                 }
-                
+
             } catch (e) {
                 document.getElementById('status-dot').className = "w-2 h-2 rounded-full bg-red-500";
-                if(!isVacationMode) {
+                if (!isVacationMode) {
                     document.getElementById('status-text').innerText = "Offline Mode";
                     setView('Push');
                 }
@@ -341,24 +483,24 @@
         function setView(view) {
             if (!isVacationMode && view !== 'History') lastWorkoutMode = view;
             currentDay = view;
-            
+
             if (!isVacationMode) {
-                document.querySelectorAll('.nav-btn').forEach(btn => { 
-                    btn.classList.remove('active-tab', 'text-red-600'); 
-                    btn.classList.add('text-gray-400', 'dark:text-gray-500'); 
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active-tab', 'text-red-600');
+                    btn.classList.add('text-gray-400', 'dark:text-gray-500');
                 });
                 const activeBtn = document.getElementById(`nav-${view}`);
-                if(activeBtn) {
+                if (activeBtn) {
                     activeBtn.classList.remove('text-gray-400', 'dark:text-gray-500');
                     activeBtn.classList.add('active-tab', 'text-red-600');
                 }
             }
-            
+
             const container = document.getElementById('main-container');
             container.innerHTML = '';
             if (view === 'History') renderHistory(container);
             else renderWorkout(view, container);
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         function renderWorkout(day, container) {
@@ -367,21 +509,21 @@
             const titleColor = isVacationMode ? "text-blue-600 dark:text-blue-400" : "text-gray-900 dark:text-white";
 
             container.innerHTML = `<div class="mb-8 fade-in px-2"><h2 class="text-4xl font-black ${titleColor} uppercase italic tracking-tighter">${title}</h2></div>`;
-            
+
             list.forEach((ex) => {
-                
+
                 let prevWeight = '';
                 let prevColorClass = 'text-gray-400 dark:text-gray-500';
-                
+
                 if (!isVacationMode) {
                     const historyData = cloudHistory[ex.name];
                     if (historyData) {
                         prevWeight = historyData.weight;
                         let targetPerSet = 12;
-                        if(ex.range.includes('-')) targetPerSet = parseInt(ex.range.split('-')[1]);
-                        else if(ex.range === 'Max') targetPerSet = 8;
+                        if (ex.range.includes('-')) targetPerSet = parseInt(ex.range.split('-')[1]);
+                        else if (ex.range === 'Max') targetPerSet = 8;
                         const totalRepGoal = targetPerSet * ex.sets;
-                        
+
                         if (historyData.totalReps >= totalRepGoal) prevColorClass = 'text-green-600 dark:text-green-400';
                         else prevColorClass = 'text-red-600 dark:text-red-400';
                     }
@@ -392,24 +534,24 @@
                     currentWeight = prevWeight;
                     localStorage.setItem(`W-${ex.name}`, currentWeight);
                 }
-                
-                let targetReps = 12; 
-                if(ex.range.includes('-')) targetReps = parseInt(ex.range.split('-')[1]);
-                else if(ex.range === 'Max') targetReps = 15;
-                else if(ex.range.includes('/')) targetReps = 15;
+
+                let targetReps = 12;
+                if (ex.range.includes('-')) targetReps = parseInt(ex.range.split('-')[1]);
+                else if (ex.range === 'Max') targetReps = 15;
+                else if (ex.range.includes('/')) targetReps = 15;
 
                 const card = document.createElement('div');
                 card.className = 'bg-white dark:bg-darkcard rounded-[2rem] shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6 transition-colors duration-300';
-                
+
                 let setsHtml = '';
-                for(let i = 1; i <= ex.sets; i++) {
+                for (let i = 1; i <= ex.sets; i++) {
                     const key = `R-${ex.name}-S${i}`;
                     const r = localStorage.getItem(key);
-                    
+
                     let controlHtml = '';
                     const btnColor = isVacationMode ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-red-50 text-red-600 border-red-100';
                     const btnDarkColor = isVacationMode ? 'dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-900/30' : 'dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/30';
-                    
+
                     if (r === null) {
                         controlHtml = `
                             <button onclick="quickHit('${ex.name}', ${i}, ${targetReps})" 
@@ -435,7 +577,7 @@
                         </div>
                     </div>`;
                 }
-                
+
                 let weightHtml = '';
                 if (!isVacationMode) {
                     weightHtml = `
@@ -455,7 +597,7 @@
 
                 card.innerHTML = `
                     <div class="flex justify-between items-center mb-6">
-                        <div class="flex items-center gap-2 cursor-pointer group" onclick="openVisual('${ex.name}', '${ex.img}')">
+                        <div class="flex items-center gap-2 cursor-pointer group" onclick="openVisual('${ex.name}', '${ex.img}', '${ex.search || ex.name}')">
                             <h3 class="font-black text-xl text-gray-900 dark:text-white uppercase tracking-tight group-hover:text-blue-500 transition-colors underline decoration-2 decoration-gray-200 dark:decoration-gray-700 underline-offset-4 group-hover:decoration-blue-500">${ex.name}</h3>
                             <i class="ph-bold ph-image text-gray-300 group-hover:text-blue-500 transition-colors"></i>
                         </div>
@@ -470,10 +612,10 @@
                     <div class="space-y-1">${setsHtml}</div>`;
                 container.appendChild(card);
             });
-            
+
             const btnText = isVacationMode ? "Complete Session (No Sync)" : "Complete & Sync";
             const btnColor = isVacationMode ? "bg-blue-600 dark:bg-blue-600" : "bg-gray-900 dark:bg-red-600";
-            
+
             const saveWrapper = document.createElement('div');
             saveWrapper.className = "mt-8 mb-12";
             saveWrapper.innerHTML = `<button onclick="saveWholeWorkout('${day}')" id="save-btn" class="w-full py-6 ${btnColor} text-white rounded-3xl shadow-xl flex items-center justify-center gap-3 tap-scale transition-all"><span class="font-black uppercase tracking-[0.15em] text-sm" id="save-text">${btnText}</span><i class="ph-bold ${isVacationMode ? 'ph-check' : 'ph-cloud-arrow-up'} text-xl" id="save-icon"></i></button>`;
@@ -481,27 +623,76 @@
         }
 
         // --- IMAGE MODAL LOGIC ---
-        function openVisual(name, imgSrc) {
+        let currentSearchTerm = '';
+
+        function openVisual(name, imgSrc, searchTerm) {
             currentExerciseName = name;
+            currentSearchTerm = searchTerm || name;
             const modal = document.getElementById('visual-modal');
             const img = document.getElementById('visual-img');
             const title = document.getElementById('modal-title');
-            
+
             title.innerText = name;
-            // Robust check for image URL
+            // Show loading state
+            img.style.display = 'none';
+            const container = img.parentElement;
+            let loader = container.querySelector('.img-loader');
+            if (!loader) {
+                loader = document.createElement('div');
+                loader.className = 'img-loader';
+                loader.innerHTML = '<div class="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>';
+                loader.style.cssText = 'display:flex;align-items:center;justify-content:center;position:absolute;inset:0;';
+                container.appendChild(loader);
+            }
+            loader.style.display = 'flex';
+
+            // Try primary image
             if (imgSrc && imgSrc.length > 5) {
+                img.onload = function () {
+                    loader.style.display = 'none';
+                    img.style.display = 'block';
+                };
                 img.src = imgSrc;
             } else {
-                img.src = `https://placehold.co/800x600/e2e8f0/475569?text=${encodeURIComponent(name)}`;
+                tryWgerSearch(img, loader);
             }
-            
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
-        function handleImageError(img) {
-            img.onerror = null;
+        async function tryWgerSearch(img, loader) {
+            try {
+                const res = await fetch(`https://wger.de/api/v2/exercise/search/?term=${encodeURIComponent(currentSearchTerm)}&language=english&format=json`);
+                const data = await res.json();
+                if (data.suggestions && data.suggestions.length > 0) {
+                    const exerciseId = data.suggestions[0].data.id;
+                    const imgRes = await fetch(`https://wger.de/api/v2/exerciseimage/?exercise_base=${exerciseId}&format=json`);
+                    const imgData = await imgRes.json();
+                    if (imgData.results && imgData.results.length > 0) {
+                        img.onload = function () { loader.style.display = 'none'; img.style.display = 'block'; };
+                        img.onerror = function () {
+                            img.onerror = null;
+                            showPlaceholder(img, loader);
+                        };
+                        img.src = imgData.results[0].image;
+                        return;
+                    }
+                }
+            } catch (e) { /* API failed, use placeholder */ }
+            showPlaceholder(img, loader);
+        }
+
+        function showPlaceholder(img, loader) {
+            if (loader) loader.style.display = 'none';
+            img.style.display = 'block';
             img.src = `https://placehold.co/800x600/e2e8f0/475569?text=${encodeURIComponent(currentExerciseName)}`;
+        }
+
+        function handleImageError(imgEl) {
+            imgEl.onerror = null;
+            const loader = imgEl.parentElement.querySelector('.img-loader');
+            tryWgerSearch(imgEl, loader || { style: { display: 'none' } });
         }
 
         function closeModal() {
@@ -519,8 +710,8 @@
             localStorage.setItem(`R-${name}-S${setIdx}`, target);
             localStorage.setItem('Last-Activity-Date', new Date().toDateString());
             const container = document.getElementById(`ctrl-${name}-${setIdx}`);
-            const btnClass = isVacationMode ? "btn-gray" : "btn-gray"; 
-            
+            const btnClass = isVacationMode ? "btn-gray" : "btn-gray";
+
             container.innerHTML = `
                 <div class="flex items-center gap-3 w-full justify-end fade-in">
                     <button onclick="adjustRep('${name}', ${setIdx}, -1)" class="stepper-btn ${btnClass} tap-scale">－</button>
@@ -556,25 +747,25 @@
         }
 
         async function saveWholeWorkout(day) {
-            if(isSaving) return;
+            if (isSaving) return;
             const batch = [];
             const list = isVacationMode ? vacationWorkouts['FullBody'] : gymWorkouts[day];
-            
+
             list.forEach(ex => {
                 const weight = isVacationMode ? 0 : (parseFloat(localStorage.getItem(`W-${ex.name}`)) || 0);
                 let totalReps = 0;
-                for(let i=1; i<=6; i++) totalReps += parseInt(localStorage.getItem(`R-${ex.name}-S${i}`) || 0);
+                for (let i = 1; i <= 6; i++) totalReps += parseInt(localStorage.getItem(`R-${ex.name}-S${i}`) || 0);
                 if (totalReps > 0) batch.push({ name: ex.name, weight, volume: (totalReps * weight) });
             });
 
             if (batch.length === 0) return alert("No data to save.");
-            if(!confirm(`Finish ${isVacationMode ? 'Workout' : day}?`)) return;
+            if (!confirm(`Finish ${isVacationMode ? 'Workout' : day}?`)) return;
 
             isSaving = true;
             const btn = document.getElementById('save-btn');
             btn.disabled = true;
             btn.classList.add('opacity-50');
-            
+
             if (!isVacationMode) {
                 document.getElementById('save-text').innerText = "UPLOADING...";
                 document.getElementById('save-icon').className = "spinner";
@@ -586,10 +777,10 @@
                 setTimeout(() => finishSave(day, list, btn, "COMPLETED"), 500);
             }
         }
-        
+
         async function finishSave(day, list, btn, msg) {
             list.forEach(ex => {
-                for(let i=1; i<=ex.sets; i++) {
+                for (let i = 1; i <= ex.sets; i++) {
                     localStorage.removeItem(`R-${ex.name}-S${i}`);
                 }
             });
@@ -600,9 +791,9 @@
             btn.classList.replace('dark:bg-red-600', 'bg-green-600');
             btn.classList.replace('bg-blue-600', 'bg-green-600');
             btn.classList.replace('dark:bg-blue-600', 'bg-green-600');
-            
-            if(!isVacationMode) await init();
-            
+
+            if (!isVacationMode) await init();
+
             setTimeout(() => setView(isVacationMode ? 'FullBody' : day), 1000);
             isSaving = false;
         }
@@ -610,7 +801,7 @@
         async function renderHistory(container) {
             container.innerHTML = `<div class="flex flex-col items-center justify-center py-20"><div class="w-12 h-12 border-[5px] border-red-600 border-t-transparent rounded-full animate-spin"></div></div>`;
             try {
-                if(!cachedLogs) await init(); 
+                if (!cachedLogs) await init();
                 container.innerHTML = `
                     <div class="flex items-center justify-between mb-8 px-2">
                         <h2 class="text-4xl font-black text-gray-900 dark:text-white uppercase italic tracking-tighter">Logs</h2>
@@ -624,16 +815,16 @@
                     <div id="charts-wrapper" class="space-y-6"></div>
                 `;
                 renderFilteredCharts();
-            } catch(e) { container.innerHTML = "Error loading history."; }
+            } catch (e) { container.innerHTML = "Error loading history."; }
         }
 
         function renderFilteredCharts() {
             const wrapper = document.getElementById('charts-wrapper');
             const filter = document.getElementById('log-filter').value;
             wrapper.innerHTML = '';
-            
+
             const isDark = document.documentElement.classList.contains('dark');
-            const chartColor = isDark ? '#f87171' : '#dc2626'; 
+            const chartColor = isDark ? '#f87171' : '#dc2626';
             const gridColor = isDark ? '#334155' : '#f3f4f6';
 
             const groupedByEx = {};
@@ -643,13 +834,13 @@
                 groupedByEx[name].push({ date, weight });
             });
             const sortedKeys = Object.keys(groupedByEx).sort();
-            
+
             let count = 0;
             sortedKeys.forEach((exName, index) => {
                 const exDay = exerciseCategoryMap[exName];
                 if (filter !== "All" && exDay !== filter) return;
                 count++;
-                const data = groupedByEx[exName].sort((a,b) => a.date - b.date);
+                const data = groupedByEx[exName].sort((a, b) => a.date - b.date);
                 const pr = Math.max(...data.map(d => d.weight));
                 const card = document.createElement('div');
                 card.className = "bg-white dark:bg-darkcard rounded-[2rem] p-6 border border-gray-100 dark:border-gray-700 shadow-sm fade-in";
@@ -663,37 +854,37 @@
                     </div>
                     <div class="h-48 w-full"><canvas id="chart-${index}"></canvas></div>`;
                 wrapper.appendChild(card);
-                
+
                 setTimeout(() => {
                     const ctx = document.getElementById(`chart-${index}`).getContext('2d');
                     new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: data.map(d => d.date.toLocaleDateString('en-US', {month:'numeric', day:'numeric'})),
-                            datasets: [{ 
-                                data: data.map(d => d.weight), 
-                                borderColor: chartColor, 
-                                borderWidth: 3, 
-                                pointRadius: 4, 
-                                pointBackgroundColor: isDark ? '#1e293b' : '#fff', 
-                                tension: 0.3, 
-                                fill: true, 
-                                backgroundColor: isDark ? 'rgba(248, 113, 113, 0.1)' : 'rgba(220, 38, 38, 0.03)' 
+                            labels: data.map(d => d.date.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric' })),
+                            datasets: [{
+                                data: data.map(d => d.weight),
+                                borderColor: chartColor,
+                                borderWidth: 3,
+                                pointRadius: 4,
+                                pointBackgroundColor: isDark ? '#1e293b' : '#fff',
+                                tension: 0.3,
+                                fill: true,
+                                backgroundColor: isDark ? 'rgba(248, 113, 113, 0.1)' : 'rgba(220, 38, 38, 0.03)'
                             }]
                         },
-                        options: { 
-                            responsive: true, 
-                            maintainAspectRatio: false, 
-                            plugins: { legend: { display: false } }, 
-                            scales: { 
-                                y: { grid: { color: gridColor }, border: { display: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } }, 
-                                x: { grid: { display: false }, border: { display: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } } 
-                            } 
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                y: { grid: { color: gridColor }, border: { display: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } },
+                                x: { grid: { display: false }, border: { display: false }, ticks: { color: isDark ? '#94a3b8' : '#6b7280' } }
+                            }
                         }
                     });
                 }, 50);
             });
-            if(count === 0) wrapper.innerHTML = '<p class="text-center text-gray-400 dark:text-gray-600 text-sm font-bold py-10 uppercase tracking-widest">No logs found.</p>';
+            if (count === 0) wrapper.innerHTML = '<p class="text-center text-gray-400 dark:text-gray-600 text-sm font-bold py-10 uppercase tracking-widest">No logs found.</p>';
         }
 
         function deload(name) {
@@ -702,7 +893,7 @@
                 let target = cur * 0.9;
                 let closest = bowflexWeights.reduce((p, c) => Math.abs(c - target) < Math.abs(p - target) ? c : p);
                 localStorage.setItem(`W-${name}`, closest);
-                for(let i = 1; i <= 6; i++) localStorage.removeItem(`R-${name}-S${i}`);
+                for (let i = 1; i <= 6; i++) localStorage.removeItem(`R-${name}-S${i}`);
                 alert(`Deloaded ${name} to ${closest} lbs`);
                 setView(currentDay);
             }
@@ -712,18 +903,18 @@
             defaultRestTime = seconds;
             const clickedBtn = document.getElementById(`t-${seconds}`);
             if (clickedBtn && clickedBtn.classList.contains('timer-selected')) {
-               resetTimer();
-               return;
+                resetTimer();
+                return;
             }
             document.querySelectorAll('.timer-btn').forEach(btn => {
                 btn.classList.remove('timer-selected');
                 btn.classList.add('timer-inactive');
             });
-            if(clickedBtn) {
+            if (clickedBtn) {
                 clickedBtn.classList.remove('timer-inactive');
                 clickedBtn.classList.add('timer-selected');
             }
-            if(timerRunning) startTimer(seconds);
+            if (timerRunning) startTimer(seconds);
         }
 
         function startTimer(s) {
@@ -733,9 +924,9 @@
             timerPaused = false;
             const disp = document.getElementById('timer-display');
             disp.classList.add('text-red-600', 'dark:text-red-400');
-            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             timerInterval = setInterval(updateTimer, 200);
-            updateTimer(); 
+            updateTimer();
         }
 
         function updateTimer() {
@@ -743,18 +934,18 @@
             const now = Date.now();
             const left = Math.round((endTime - now) / 1000);
             timeLeft = left;
-            if (left < 0) { 
-                resetTimer(); 
-                playBeep(); 
-                return; 
+            if (left < 0) {
+                resetTimer();
+                playBeep();
+                return;
             }
-            const m = Math.floor(left/60);
+            const m = Math.floor(left / 60);
             const s = left % 60;
-            document.getElementById('timer-display').innerText = `${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+            document.getElementById('timer-display').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
         }
 
         function toggleTimerState() {
-            if (!timerRunning && timeLeft === 0) return; 
+            if (!timerRunning && timeLeft === 0) return;
             if (timerPaused) {
                 timerPaused = false;
                 endTime = Date.now() + timeLeft * 1000;
@@ -763,14 +954,14 @@
             }
         }
 
-        function resetTimer() { 
-            clearInterval(timerInterval); 
+        function resetTimer() {
+            clearInterval(timerInterval);
             timerRunning = false;
             timerPaused = false;
             timeLeft = 0;
-            const disp = document.getElementById('timer-display'); 
-            if(disp) {
-                disp.innerText = "00:00"; 
+            const disp = document.getElementById('timer-display');
+            if (disp) {
+                disp.innerText = "00:00";
                 disp.classList.remove('text-red-600', 'dark:text-red-400');
             }
             document.querySelectorAll('.timer-btn').forEach(btn => {
@@ -782,5 +973,5 @@
         init(); 
     </script>
 </body>
-</html>
 
+</html>

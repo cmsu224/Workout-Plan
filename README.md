@@ -1,6 +1,8 @@
 # PPL PRO — Workout Tracker
 
-A **self-contained, offline-capable mobile workout tracker** built as a single HTML file. No installation, no app store, no backend required. Just copy the file to your phone and open it in any browser.
+A **self-contained, offline-capable mobile workout tracker** built as a single HTML file. No installation, no app store, no backend required.
+
+🔗 **Live App:** [https://cmsu224.github.io/Workout-Plan/workout2.0.html](https://cmsu224.github.io/Workout-Plan/workout2.0.html)
 
 ---
 

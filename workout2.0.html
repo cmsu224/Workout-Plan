@@ -180,6 +180,175 @@
         .vacation-mode #bottom-nav {
             display: none !important;
         }
+
+        /* Ring Timer */
+        #timer-ring-wrap {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            cursor: pointer;
+        }
+
+        #timer-ring-wrap svg {
+            transform: rotate(-90deg);
+        }
+
+        #timer-ring-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-weight: 900;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        #ring-track {
+            transition: stroke 0.3s;
+        }
+
+        #ring-fill {
+            transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
+        }
+
+        /* Progress Bar */
+        .ex-progress-bar {
+            height: 4px;
+            border-radius: 999px;
+            background: #e5e7eb;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+        }
+
+        .dark .ex-progress-bar {
+            background: #334155;
+        }
+
+        .ex-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: #dc2626;
+            transition: width 0.4s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .vacation-mode .ex-progress-fill {
+            background: #2563eb;
+        }
+
+        /* PR Badge */
+        .pr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            background: #fef9c3;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            padding: 2px 8px;
+            border-radius: 999px;
+            animation: pr-pulse 1.5s ease-in-out infinite;
+        }
+
+        .dark .pr-badge {
+            background: #451a03;
+            color: #fbbf24;
+            border-color: #78350f;
+        }
+
+        @keyframes pr-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Notes Textarea */
+        .notes-area {
+            width: 100%;
+            min-height: 60px;
+            font-size: 0.8rem;
+            border-radius: 12px;
+            border: 1.5px solid #e5e7eb;
+            padding: 10px 12px;
+            resize: vertical;
+            outline: none;
+            font-family: inherit;
+            color: #374151;
+            background: #f9fafb;
+            transition: border-color 0.15s;
+        }
+
+        .dark .notes-area {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .notes-area:focus {
+            border-color: #dc2626;
+        }
+
+        .dark .notes-area:focus {
+            border-color: #f87171;
+        }
+
+        /* Summary Modal */
+        #summary-modal {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        #summary-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        #summary-modal.flex {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Toast */
+        #app-toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+            pointer-events: none;
+        }
+
+        #app-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Confirm Dialog */
+        #confirm-dialog {
+            transition: opacity 0.2s ease;
+        }
+
+        #confirm-dialog.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #confirm-dialog.flex {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -214,10 +383,18 @@
                         class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
                         <i id="theme-icon" class="ph-bold ph-moon"></i>
                     </button>
-                    <!-- Click time to pause -->
-                    <div onclick="toggleTimerState()" id="timer-display"
-                        class="text-5xl font-mono font-black text-gray-800 dark:text-gray-100 leading-none tracking-tight cursor-pointer active:opacity-70">
-                        00:00</div>
+                    <!-- Ring Timer -->
+                    <div id="timer-ring-wrap" onclick="toggleTimerState()">
+                        <svg width="72" height="72" viewBox="0 0 72 72">
+                            <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
+                                stroke-width="5" />
+                            <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626" stroke-width="5"
+                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" />
+                        </svg>
+                        <div id="timer-display" id="timer-ring-center">
+                            <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -237,6 +414,46 @@
 
     <!-- MAIN CONTENT -->
     <main id="main-container" class="p-4 max-w-xl mx-auto space-y-6 fade-in"></main>
+
+    <!-- TOAST -->
+    <div id="app-toast">
+        <div id="toast-inner"
+            class="px-5 py-3 rounded-2xl text-sm font-bold shadow-xl text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900">
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirm-dialog"
+        class="hidden fixed inset-0 z-50 bg-black/70 flex items-end justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl p-6">
+            <p id="confirm-msg" class="text-lg font-black text-gray-900 dark:text-white text-center mb-6"></p>
+            <div class="flex gap-3">
+                <button onclick="confirmCancel()"
+                    class="flex-1 py-4 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-sm uppercase tracking-wide tap-scale">Cancel</button>
+                <button id="confirm-ok-btn"
+                    class="flex-1 py-4 rounded-2xl bg-red-600 text-white font-bold text-sm uppercase tracking-wide tap-scale">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUMMARY MODAL -->
+    <div id="summary-modal"
+        class="hidden fixed inset-0 z-50 bg-black/70 flex items-end justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Workout Summary
+                </h3>
+            </div>
+            <div class="p-6 space-y-3 max-h-72 overflow-y-auto" id="summary-body"></div>
+            <div class="p-4 flex gap-3 border-t border-gray-100 dark:border-gray-700">
+                <button onclick="closeSummaryModal()"
+                    class="flex-1 py-4 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-sm uppercase tracking-wide tap-scale">Cancel</button>
+                <button id="summary-confirm-btn"
+                    class="flex-1 py-4 rounded-2xl bg-gray-900 dark:bg-red-600 text-white font-bold text-sm uppercase tracking-wide tap-scale">Sync
+                    ↑</button>
+            </div>
+        </div>
+    </div>
 
     <!-- VISUAL MODAL -->
     <div id="visual-modal"

@@ -1,0 +1,128 @@
+# PPL PRO — Workout Tracker
+
+A **self-contained, offline-capable mobile workout tracker** built as a single HTML file. No installation, no app store, no backend required. Just copy the file to your phone and open it in any browser.
+
+---
+
+## 📱 How to Use (Mobile)
+
+**It's a single standalone file — `workout2.0.html`.**
+
+1. Copy `workout2.0.html` to your phone (via AirDrop, Google Drive, USB, email, etc.)
+2. Open it in your mobile browser (Safari, Chrome, etc.)
+3. On iOS: tap **Share → Add to Home Screen** for a full PWA-like experience
+4. That's it — no login, no install.
+
+> [!NOTE]
+> All workout data is saved locally in your browser's `localStorage`. The Google Sheets sync is optional and requires the Apps Script backend to be configured.
+
+---
+
+## 🏋️ Features
+
+### Workout Modes
+- **Push / Pull / Legs** — Classic PPL split with gym dumbbell exercises
+- **Vacation Mode** ✈️ — Full-body resistance band + bodyweight workout when away from the gym
+
+### Per-Exercise Tracking
+- **Weight selector** — Snaps to Bowflex weight increments (5–90 lbs)
+- **Set tracking** — Tap "Hit X" to log reps, then fine-tune with +/− steppers
+- **Rest timer** — Auto-starts after every logged set; configurable (60s / 90s / 2m / 5m)
+- **Exercise visuals** — Animated SVG demonstrations; tap exercise name to view
+- **Per-exercise notes** 📝 — Jot form cues or reminders, saved locally
+- **Progress bar** — Track set completion at a glance on every card
+- **PR detection** ⚡ — Badge flashes when you exceed your previous best weight
+- **Deload button** — Drops weight 10% to the nearest increment when needed
+
+### History & Analytics
+- **Logs tab** — Line charts for every exercise showing weight progression over time
+- **Filter by day** — Push / Pull / Legs or All
+- **PR tracking** — Best weight highlighted on each chart
+
+### Smart Features
+- **Auto-next routine** — Detects your last logged day and opens the next one automatically
+- **Dark mode** 🌙 — Persists across sessions
+- **Cloud sync** ☁️ — Posts workout data to a Google Sheets Apps Script endpoint
+- **Offline fallback** — Works fully without internet (no sync)
+
+---
+
+## 🗂️ Project Structure
+
+```
+Workout-Plan/
+├── workout2.0.html   # The entire app — HTML + CSS + JavaScript in one file
+└── README.md         # This file
+```
+
+---
+
+## ⚙️ Cloud Sync Setup (Optional)
+
+The app posts workout data to a Google Apps Script Web App URL stored in:
+```js
+const SCRIPT_URL = "https://script.google.com/macros/s/.../exec";
+```
+
+To use your own:
+1. Create a Google Sheet
+2. Deploy an Apps Script Web App that accepts `POST` requests and appends rows
+3. Replace `SCRIPT_URL` in `workout2.0.html` with your deployment URL
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Tech |
+|---|---|
+| UI Framework | [Tailwind CSS](https://tailwindcss.com/) (CDN) |
+| Icons | [Phosphor Icons](https://phosphoricons.com/) |
+| Charts | [Chart.js](https://www.chartjs.org/) |
+| Exercise Visuals | Custom animated SVGs |
+| Storage | `localStorage` (browser-native) |
+| Backend | Google Apps Script (optional) |
+
+---
+
+## 📝 Workout Plan Reference
+
+### Push
+| Exercise | Sets | Rep Range |
+|---|---|---|
+| DB Flat Bench | 4 | 8–12 |
+| Seated DB Press | 3 | 8–12 |
+| Incline DB Flys | 3 | 12–15 |
+| Lateral Raises | 4 | 15–20 |
+| Skull Crushers | 3 | 12–15 |
+| Banded Pushdowns | 3 | 20 |
+
+### Pull
+| Exercise | Sets | Rep Range |
+|---|---|---|
+| Pull-Ups | 4 | Max |
+| One-Arm Row | 3 | 8–10 |
+| DB Pullovers | 3 | 12–15 |
+| Rear Delt Flys | 4 | 15–20 |
+| Bicep Curls | 3 | 10–12 |
+| Hammer Curls | 3 | 12 |
+
+### Legs
+| Exercise | Sets | Rep Range |
+|---|---|---|
+| Goblet Squats | 4 | 10–12 |
+| Bulgarian Splits | 3 | 8–12 |
+| DB RDLs | 4 | 10–12 |
+| DB Lunges | 3 | 20 |
+| Calf Raises | 5 | 15–20 |
+
+### Vacation (Full Body)
+| Exercise | Sets | Rep Range |
+|---|---|---|
+| Bodyweight Squats | 4 | 20–25 |
+| Push-Ups | 3 | Max |
+| Lunges | 3 | 15/side |
+| Band Rows | 4 | 15–20 |
+| Band Shoulder Press | 3 | 12–15 |
+| Band Bicep Curls | 3 | 15–20 |
+| Band Tricep Press | 3 | 15–20 |
+| Plank | 3 | 60s |

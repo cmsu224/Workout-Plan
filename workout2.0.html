@@ -789,10 +789,13 @@
                 const card = document.createElement('div');
                 card.className = 'bg-white dark:bg-darkcard rounded-[2rem] shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6 transition-colors duration-300';
 
+                // Count completed sets for progress bar
+                let completedSets = 0;
                 let setsHtml = '';
                 for (let i = 1; i <= ex.sets; i++) {
                     const key = `R-${ex.name}-S${i}`;
                     const r = localStorage.getItem(key);
+                    if (r !== null) completedSets++;
 
                     let controlHtml = '';
                     const btnColor = isVacationMode ? 'bg-blue-50 text-blue-600 border-blue-100' : 'bg-red-50 text-red-600 border-red-100';
@@ -800,7 +803,7 @@
 
                     if (r === null) {
                         controlHtml = `
-                            <button onclick="quickHit('${ex.name}', ${i}, ${targetReps})" 
+                            <button onclick="quickHit('${ex.name}', ${i}, ${targetReps})"
                                 class="w-full ${btnColor} ${btnDarkColor} border font-black text-sm uppercase py-3 rounded-xl tap-scale transition-colors">
                                 Hit ${targetReps}
                             </button>
@@ -824,38 +827,67 @@
                     </div>`;
                 }
 
+                // PR badge: flashes when current weight exceeds cloud best
+                const isCurPR = !isVacationMode && prevWeight !== '' && parseFloat(currentWeight) > parseFloat(prevWeight);
+                const prBadge = isCurPR ? `<span class="pr-badge">⚡ New PR!</span>` : '';
+
                 let weightHtml = '';
                 if (!isVacationMode) {
                     weightHtml = `
                     <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 mb-6 border border-gray-100 dark:border-gray-700">
-                        <div class="flex justify-between mb-2">
+                        <div class="flex justify-between mb-2 flex-wrap gap-1">
                              <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Lbs (One DB)</span>
-                             <span class="text-[10px] font-bold ${prevColorClass} uppercase tracking-wider">Prev: ${prevWeight || '--'}</span>
+                             <div class="flex items-center gap-2">
+                                 <span id="pr-badge-${ex.name}">${prBadge}</span>
+                                 <span class="text-[10px] font-bold ${prevColorClass} uppercase tracking-wider">Prev: ${prevWeight || '--'}</span>
+                             </div>
                         </div>
                         <div class="flex items-center justify-between gap-4">
                             <button onclick="adjustWeight('${ex.name}', -1)" class="stepper-btn btn-gray tap-scale text-xl">－</button>
-                            <input type="number" id="w-disp-${ex.name}" value="${currentWeight}" readonly 
+                            <input type="number" id="w-disp-${ex.name}" value="${currentWeight}" readonly
                                 class="bg-transparent text-center font-black text-4xl text-gray-900 dark:text-white outline-none w-24">
                             <button onclick="adjustWeight('${ex.name}', 1)" class="stepper-btn btn-gray tap-scale text-xl">＋</button>
                         </div>
                     </div>`;
                 }
 
+                // Progress bar
+                const pct = ex.sets > 0 ? Math.round((completedSets / ex.sets) * 100) : 0;
+                const progressBar = `<div class="ex-progress-bar"><div class="ex-progress-fill" id="prog-${ex.name}" style="width:${pct}%"></div></div>`;
+
+                // Saved notes
+                const savedNote = localStorage.getItem(`N-${ex.name}`) || '';
+                const notesHtml = `
+                    <div id="notes-wrap-${ex.name}" class="${savedNote ? '' : 'hidden'} mt-4">
+                        <textarea
+                            class="notes-area"
+                            placeholder="Form notes, cues..."
+                            oninput="saveNote('${ex.name}', this.value)">${savedNote}</textarea>
+                    </div>`;
+
                 card.innerHTML = `
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between items-center mb-2">
                         <div class="flex items-center gap-2 cursor-pointer group" onclick="openVisual('${ex.name}', '${ex.img}', '${ex.search || ex.name}')">
                             <h3 class="font-black text-xl text-gray-900 dark:text-white uppercase tracking-tight group-hover:text-blue-500 transition-colors underline decoration-2 decoration-gray-200 dark:decoration-gray-700 underline-offset-4 group-hover:decoration-blue-500">${ex.name}</h3>
                             <i class="ph-bold ph-image text-gray-300 group-hover:text-blue-500 transition-colors"></i>
                         </div>
-                        ${!isVacationMode ? `<button onclick="deload('${ex.name}')" class="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg font-bold uppercase tracking-wide tap-scale">Deload</button>` : ''}
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleNotes('${ex.name}')" class="p-2 rounded-lg text-gray-400 dark:text-gray-500 hover:text-yellow-500 dark:hover:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors" title="Notes">
+                                <i class="ph-bold ph-note-pencil text-lg"></i>
+                            </button>
+                            ${!isVacationMode ? `<button onclick="deload('${ex.name}')" class="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg font-bold uppercase tracking-wide tap-scale">Deload</button>` : ''}
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center mb-4">
+                    <div class="flex justify-between items-center mb-3">
                          <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Goal: ${ex.range}</p>
+                         <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest" id="setcount-${ex.name}">${completedSets}/${ex.sets} sets</p>
                     </div>
-                    
+
+                    ${progressBar}
                     ${weightHtml}
 
-                    <div class="space-y-1">${setsHtml}</div>`;
+                    <div class="space-y-1">${setsHtml}</div>
+                    ${notesHtml}`;
                 container.appendChild(card);
             });
 
@@ -972,15 +1004,18 @@
             localStorage.setItem(`R-${name}-S${setIdx}`, target);
             localStorage.setItem('Last-Activity-Date', new Date().toDateString());
             const container = document.getElementById(`ctrl-${name}-${setIdx}`);
-            const btnClass = isVacationMode ? "btn-gray" : "btn-gray";
 
             container.innerHTML = `
                 <div class="flex items-center gap-3 w-full justify-end fade-in">
-                    <button onclick="adjustRep('${name}', ${setIdx}, -1)" class="stepper-btn ${btnClass} tap-scale">－</button>
+                    <button onclick="adjustRep('${name}', ${setIdx}, -1)" class="stepper-btn btn-gray tap-scale">－</button>
                     <span id="disp-${name}-${setIdx}" class="text-2xl font-black text-gray-900 dark:text-white w-10 text-center">${target}</span>
-                    <button onclick="adjustRep('${name}', ${setIdx}, 1)" class="stepper-btn ${btnClass} tap-scale">＋</button>
+                    <button onclick="adjustRep('${name}', ${setIdx}, 1)" class="stepper-btn btn-gray tap-scale">＋</button>
                 </div>
             `;
+            // Update progress bar + set counter live
+            const list = isVacationMode ? vacationWorkouts['FullBody'] : (gymWorkouts[currentDay] || []);
+            const exDef = list.find(e => e.name === name);
+            if (exDef) updateProgressBar(name, exDef.sets);
             startTimer(defaultRestTime);
         }
 
@@ -1006,7 +1041,17 @@
             const newWeight = bowflexWeights[newIdx];
             localStorage.setItem(`W-${name}`, newWeight);
             document.getElementById(`w-disp-${name}`).value = newWeight;
+
+            // Update PR badge live
+            const prevWeight = cloudHistory[name] ? cloudHistory[name].weight : null;
+            const badgeEl = document.getElementById(`pr-badge-${name}`);
+            if (badgeEl && prevWeight !== null) {
+                badgeEl.innerHTML = newWeight > prevWeight ? `<span class="pr-badge">⚡ New PR!</span>` : '';
+            }
         }
+
+        // ── Summary modal state ──
+        let _pendingBatch = [], _pendingDay = '', _pendingList = [];
 
         async function saveWholeWorkout(day) {
             if (isSaving) return;
@@ -1016,27 +1061,73 @@
             list.forEach(ex => {
                 const weight = isVacationMode ? 0 : (parseFloat(localStorage.getItem(`W-${ex.name}`)) || 0);
                 let totalReps = 0;
-                for (let i = 1; i <= 6; i++) totalReps += parseInt(localStorage.getItem(`R-${ex.name}-S${i}`) || 0);
-                if (totalReps > 0) batch.push({ name: ex.name, weight, volume: (totalReps * weight) });
+                for (let i = 1; i <= ex.sets; i++) totalReps += parseInt(localStorage.getItem(`R-${ex.name}-S${i}`) || 0);
+                if (totalReps > 0) batch.push({ name: ex.name, weight, reps: totalReps, volume: totalReps * weight });
             });
 
-            if (batch.length === 0) return alert("No data to save.");
-            if (!confirm(`Finish ${isVacationMode ? 'Workout' : day}?`)) return;
+            if (batch.length === 0) { showToast('No sets logged yet!', 'warn'); return; }
 
+            // Build summary modal
+            _pendingBatch = batch; _pendingDay = day; _pendingList = list;
+            const totalVol = batch.reduce((s, e) => s + e.volume, 0);
+            const totalSets = list.reduce((s, e) => {
+                let c = 0; for (let i = 1; i <= e.sets; i++) if (localStorage.getItem(`R-${e.name}-S${i}`) !== null) c++;
+                return s + c;
+            }, 0);
+
+            const bodyEl = document.getElementById('summary-body');
+            bodyEl.innerHTML = `
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Sets</span>
+                    <span class="font-black text-gray-900 dark:text-white">${totalSets}</span>
+                </div>
+                ${!isVacationMode ? `<div class="flex justify-between text-sm mb-4">
+                    <span class="font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Volume</span>
+                    <span class="font-black text-gray-900 dark:text-white">${totalVol.toLocaleString()} lbs</span>
+                </div>` : ''}
+                <div class="space-y-2 border-t border-gray-100 dark:border-gray-700 pt-4">
+                    ${batch.map(e => `
+                        <div class="flex justify-between text-xs">
+                            <span class="font-bold text-gray-700 dark:text-gray-300 uppercase">${e.name}</span>
+                            <span class="text-gray-500 dark:text-gray-400 font-bold">${e.reps} reps${!isVacationMode ? ' @ ' + e.weight + ' lbs' : ''}</span>
+                        </div>`).join('')}
+                </div>`;
+
+            const confirmBtn = document.getElementById('summary-confirm-btn');
+            confirmBtn.onclick = executeSave;
+            if (isVacationMode) {
+                confirmBtn.textContent = 'Complete ✓';
+                confirmBtn.className = confirmBtn.className.replace('bg-gray-900', 'bg-blue-600').replace('dark:bg-red-600', 'dark:bg-blue-600');
+            } else {
+                confirmBtn.textContent = 'Sync ↑';
+            }
+
+            const modal = document.getElementById('summary-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeSummaryModal() {
+            const modal = document.getElementById('summary-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function executeSave() {
+            closeSummaryModal();
+            const day = _pendingDay, list = _pendingList, batch = _pendingBatch;
             isSaving = true;
             const btn = document.getElementById('save-btn');
-            btn.disabled = true;
-            btn.classList.add('opacity-50');
+            if (btn) { btn.disabled = true; btn.classList.add('opacity-50'); }
 
             if (!isVacationMode) {
-                document.getElementById('save-text').innerText = "UPLOADING...";
-                document.getElementById('save-icon').className = "spinner";
+                if (btn) { document.getElementById('save-text').innerText = "UPLOADING..."; document.getElementById('save-icon').className = "spinner"; }
                 try {
                     await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(batch) });
                     finishSave(day, list, btn, "SAVED");
-                } catch (e) { isSaving = false; alert("Error saving."); }
+                } catch (e) { isSaving = false; showToast('Error uploading. Try again.', 'error'); if (btn) { btn.disabled = false; btn.classList.remove('opacity-50'); } }
             } else {
-                setTimeout(() => finishSave(day, list, btn, "COMPLETED"), 500);
+                setTimeout(() => finishSave(day, list, btn, "COMPLETED"), 400);
             }
         }
 
@@ -1047,16 +1138,18 @@
                 }
             });
 
-            document.getElementById('save-text').innerText = msg;
-            document.getElementById('save-icon').className = "ph-fill ph-check-circle";
-            btn.classList.replace('bg-gray-900', 'bg-green-600');
-            btn.classList.replace('dark:bg-red-600', 'bg-green-600');
-            btn.classList.replace('bg-blue-600', 'bg-green-600');
-            btn.classList.replace('dark:bg-blue-600', 'bg-green-600');
+            if (btn) {
+                document.getElementById('save-text').innerText = msg;
+                document.getElementById('save-icon').className = "ph-fill ph-check-circle";
+                btn.classList.replace('bg-gray-900', 'bg-green-600');
+                btn.classList.replace('dark:bg-red-600', 'bg-green-600');
+                btn.classList.replace('bg-blue-600', 'bg-green-600');
+                btn.classList.replace('dark:bg-blue-600', 'bg-green-600');
+            }
 
+            showToast(isVacationMode ? '✓ Session complete!' : '☁ Synced!', 'success');
             if (!isVacationMode) await init();
-
-            setTimeout(() => setView(isVacationMode ? 'FullBody' : day), 1000);
+            setTimeout(() => setView(isVacationMode ? 'FullBody' : day), 1200);
             isSaving = false;
         }
 
@@ -1151,14 +1244,15 @@
 
         function deload(name) {
             let cur = parseFloat(localStorage.getItem(`W-${name}`)) || 0;
-            if (cur > 5) {
-                let target = cur * 0.9;
-                let closest = bowflexWeights.reduce((p, c) => Math.abs(c - target) < Math.abs(p - target) ? c : p);
+            if (cur <= 5) return;
+            let target = cur * 0.9;
+            let closest = bowflexWeights.reduce((p, c) => Math.abs(c - target) < Math.abs(p - target) ? c : p);
+            showConfirm(`Deload ${name} to ${closest} lbs?`, () => {
                 localStorage.setItem(`W-${name}`, closest);
                 for (let i = 1; i <= 6; i++) localStorage.removeItem(`R-${name}-S${i}`);
-                alert(`Deloaded ${name} to ${closest} lbs`);
+                showToast(`Deloaded to ${closest} lbs`, 'success');
                 setView(currentDay);
-            }
+            });
         }
 
         function setRestTime(seconds) {
@@ -1179,13 +1273,38 @@
             if (timerRunning) startTimer(seconds);
         }
 
+        // ── Ring timer helpers ──
+        const RING_CIRCUMFERENCE = 2 * Math.PI * 30; // r=30 → ~188.5
+        let ringDuration = 90;
+
+        function updateRing(left) {
+            const fill = document.getElementById('ring-fill');
+            const txt = document.getElementById('timer-text');
+            if (!fill || !txt) return;
+            const frac = Math.max(0, left / ringDuration);
+            fill.style.strokeDashoffset = RING_CIRCUMFERENCE * (1 - frac);
+            // Turn red in final 10 seconds
+            const urgent = left <= 10 && left > 0;
+            fill.style.stroke = urgent ? '#ef4444' : '#dc2626';
+            const m = Math.floor(Math.max(0, left) / 60);
+            const s = Math.max(0, left) % 60;
+            txt.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            txt.style.color = urgent ? '#ef4444' : '';
+        }
+
+        function resetRing() {
+            const fill = document.getElementById('ring-fill');
+            const txt = document.getElementById('timer-text');
+            if (fill) { fill.style.strokeDashoffset = RING_CIRCUMFERENCE; fill.style.stroke = '#dc2626'; }
+            if (txt) { txt.textContent = '00:00'; txt.style.color = ''; }
+        }
+
         function startTimer(s) {
             clearInterval(timerInterval);
+            ringDuration = s;
             endTime = Date.now() + s * 1000;
             timerRunning = true;
             timerPaused = false;
-            const disp = document.getElementById('timer-display');
-            disp.classList.add('text-red-600', 'dark:text-red-400');
             if (audioCtx.state === 'suspended') audioCtx.resume();
             timerInterval = setInterval(updateTimer, 200);
             updateTimer();
@@ -1193,17 +1312,14 @@
 
         function updateTimer() {
             if (!timerRunning || timerPaused) return;
-            const now = Date.now();
-            const left = Math.round((endTime - now) / 1000);
+            const left = Math.round((endTime - Date.now()) / 1000);
             timeLeft = left;
             if (left < 0) {
                 resetTimer();
                 playBeep();
                 return;
             }
-            const m = Math.floor(left / 60);
-            const s = left % 60;
-            document.getElementById('timer-display').innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+            updateRing(left);
         }
 
         function toggleTimerState() {
@@ -1221,16 +1337,75 @@
             timerRunning = false;
             timerPaused = false;
             timeLeft = 0;
-            const disp = document.getElementById('timer-display');
-            if (disp) {
-                disp.innerText = "00:00";
-                disp.classList.remove('text-red-600', 'dark:text-red-400');
-            }
+            resetRing();
             document.querySelectorAll('.timer-btn').forEach(btn => {
                 btn.classList.remove('timer-selected');
                 btn.classList.add('timer-inactive');
             });
         }
+
+        // ── Notes ──
+        function toggleNotes(name) {
+            const wrap = document.getElementById(`notes-wrap-${name}`);
+            if (!wrap) return;
+            wrap.classList.toggle('hidden');
+            if (!wrap.classList.contains('hidden')) wrap.querySelector('textarea').focus();
+        }
+
+        function saveNote(name, val) {
+            if (val.trim()) localStorage.setItem(`N-${name}`, val);
+            else localStorage.removeItem(`N-${name}`);
+        }
+
+        // ── Progress bar update (called after quickHit) ──
+        function updateProgressBar(exName, totalSets) {
+            let done = 0;
+            for (let i = 1; i <= totalSets; i++) if (localStorage.getItem(`R-${exName}-S${i}`) !== null) done++;
+            const pct = totalSets > 0 ? Math.round((done / totalSets) * 100) : 0;
+            const bar = document.getElementById(`prog-${exName}`);
+            if (bar) bar.style.width = pct + '%';
+            const cnt = document.getElementById(`setcount-${exName}`);
+            if (cnt) cnt.textContent = `${done}/${totalSets} sets`;
+        }
+
+        // ── Toast notification ──
+        let _toastTimer = null;
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('app-toast');
+            const inner = document.getElementById('toast-inner');
+            const colors = {
+                success: 'bg-green-600 text-white',
+                warn: 'bg-amber-500 text-white',
+                error: 'bg-red-600 text-white'
+            };
+            inner.className = `px-5 py-3 rounded-2xl text-sm font-bold shadow-xl ${colors[type] || colors.success}`;
+            inner.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(_toastTimer);
+            _toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        // ── Styled confirm dialog ──
+        let _confirmCallback = null;
+        function showConfirm(msg, onConfirm) {
+            document.getElementById('confirm-msg').textContent = msg;
+            _confirmCallback = onConfirm;
+            const d = document.getElementById('confirm-dialog');
+            d.classList.remove('hidden');
+            d.classList.add('flex');
+        }
+        function confirmCancel() {
+            const d = document.getElementById('confirm-dialog');
+            d.classList.add('hidden');
+            d.classList.remove('flex');
+            _confirmCallback = null;
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+                confirmCancel();
+                if (_confirmCallback) _confirmCallback();
+            });
+        });
 
         init(); 
     </script>

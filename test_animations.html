@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Animation Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui;
+            background: #f1f5f9;
+            color: #1e293b;
+            padding: 20px;
+        }
+
+        body.dark {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #fff;
+        }
+
+        body.dark .controls button {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .card {
+            background: #1e293b;
+        }
+
+        .card h3 {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .card .svg-wrap {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        /* Eye class - must contrast with head fill */
+        .ex-eye {
+            fill: #ffffff;
+        }
+
+        .dark .ex-eye {
+            fill: #1e293b;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Exercise Animation Test</h1>
+    <div class="controls">
+        <button onclick="document.body.classList.toggle('dark')">Toggle Dark Mode</button>
+    </div>
+    <div class="grid" id="grid"></div>
+
+    <script>
+        const exerciseSVGs = {
+            "DB Flat Bench": `<svg viewBox="0 0 100 100" class="w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <rect x="10" y="65" width="80" height="8" fill="currentColor" opacity="0.2"/><rect x="25" y="73" width="6" height="27" fill="currentColor" opacity="0.2"/><rect x="69" y="73" width="6" height="27" fill="currentColor" opacity="0.2"/>
+  <circle cx="25" cy="61" r="7" fill="currentColor"/><circle cx="22" cy="59" r="2.5" class="ex-eye"/>
+  <line x1="32" y1="61" x2="70" y2="61" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 70 61 L 85 61 L 85 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-30; 0,0" dur="2s" repeatCount="indefinite" />
+    <line x1="45" y1="60" x2="45" y2="30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(45,30)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
+  </g>
+</svg>`,
+            "Lateral Raises": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
+  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 50 33; 60 50 33; 0 50 33" dur="2s" repeatCount="indefinite" />
+    <line x1="50" y1="33" x2="20" y2="60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(20,60) rotate(45)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
+  </g>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 50 33; -60 50 33; 0 50 33" dur="2s" repeatCount="indefinite" />
+    <line x1="50" y1="33" x2="80" y2="60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(80,60) rotate(-45)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
+  </g>
+</svg>`,
+            "Pull-Ups": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <line x1="20" y1="15" x2="80" y2="15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,30; 0,0; 0,30" dur="2s" repeatCount="indefinite"/>
+    <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
+    <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 50 60 L 45 85 M 50 60 L 55 85" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M 50 33 L 30 15 M 50 33 L 70 15" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>`,
+            "Hammer Curls": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
+  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <line x1="50" y1="35" x2="40" y2="55" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 40 55; 100 40 55; 0 40 55" dur="2s" repeatCount="indefinite" />
+    <line x1="40" y1="55" x2="40" y2="85" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(40,85)"><rect x="-4" y="-10" width="8" height="20" rx="2" fill="currentColor"/></g>
+  </g>
+</svg>`,
+            "Goblet Squats": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
+    <circle cx="50" cy="15" r="8" fill="currentColor"/><circle cx="53" cy="13" r="2.5" class="ex-eye"/>
+    <line x1="50" y1="23" x2="50" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 50 28 L 58 38 L 50 43" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <rect x="46" y="40" width="8" height="14" rx="2" fill="currentColor" opacity="0.6"/>
+    <path d="M 50 50 L 35 75 L 35 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M 50 50 L 65 75 L 65 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>`,
+            "DB Lunges": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
+    <circle cx="50" cy="10" r="7" fill="currentColor"/><circle cx="53" cy="8" r="2.5" class="ex-eye"/>
+    <line x1="50" y1="17" x2="50" y2="45" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+    <line x1="50" y1="22" x2="50" y2="52" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <rect x="46" y="48" width="8" height="14" rx="2" fill="currentColor" opacity="0.6"/>
+    <path d="M 50 45 L 30 70 L 30 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M 50 45 L 70 70 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>`,
+            "Lunges": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
+    <circle cx="50" cy="10" r="7" fill="currentColor"/><circle cx="53" cy="8" r="2.5" class="ex-eye"/>
+    <line x1="50" y1="17" x2="50" y2="45" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+    <path d="M 50 45 L 30 70 L 30 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M 50 45 L 70 70 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>`,
+            "Banded Pushdowns": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
+  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <rect x="75" y="5" width="10" height="10" rx="2" fill="currentColor" opacity="0.2"/>
+  <line x1="50" y1="35" x2="65" y2="40" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 65 40; -45 65 40; 0 65 40" dur="2s" repeatCount="indefinite" />
+    <line x1="65" y1="40" x2="65" y2="65" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <line x1="65" y1="65" x2="80" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2" opacity="0.5"/>
+  </g>
+</svg>`,
+            "Incline DB Flys": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
+  <rect x="20" y="40" width="8" height="35" transform="rotate(-30 20 40)" fill="currentColor" opacity="0.2"/><rect x="20" y="70" width="40" height="8" fill="currentColor" opacity="0.2"/>
+  <circle cx="38" cy="30" r="7" fill="currentColor"/><circle cx="35" cy="28" r="2.5" class="ex-eye"/>
+  <line x1="38" y1="37" x2="52" y2="65" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 52 65 L 70 65 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 45 45; -40 45 45; 0 45 45" dur="2.5s" repeatCount="indefinite" />
+    <line x1="45" y1="45" x2="45" y2="15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(45,15)"><rect x="-4" y="-8" width="8" height="16" rx="2" fill="currentColor"/></g>
+  </g>
+</svg>`
+        };
+
+        const grid = document.getElementById('grid');
+        for (const [name, svg] of Object.entries(exerciseSVGs)) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `<h3>${name}</h3><div class="svg-wrap">${svg}</div>`;
+            grid.appendChild(card);
+        }
+    </script>
+</body>
+
+</html>

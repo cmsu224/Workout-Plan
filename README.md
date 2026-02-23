@@ -2,7 +2,7 @@
 
 A **self-contained, offline-capable mobile workout tracker** built as a single HTML file. No installation, no app store, no backend required.
 
-🔗 **Live App:** [https://cmsu224.github.io/Workout-Plan/workout2.0.html](https://cmsu224.github.io/Workout-Plan/workout2.0.html)
+🔗 **Live App:** [https://cmsu224.github.io/Workout-Plan/](https://cmsu224.github.io/Workout-Plan/)
 
 > [!NOTE]
 > **AI Agent Rule:** Always push changes to GitHub automatically after any code modifications. The live app updates via GitHub Pages on every push to `main`.
@@ -11,9 +11,9 @@ A **self-contained, offline-capable mobile workout tracker** built as a single H
 
 ## 📱 How to Use (Mobile)
 
-**It's a single standalone file — `workout2.0.html`.**
+**It's available right away!**
 
-1. Copy `workout2.0.html` to your phone (via AirDrop, Google Drive, USB, email, etc.)
+1. Go to the live URL: `https://cmsu224.github.io/Workout-Plan/`
 2. Open it in your mobile browser (Safari, Chrome, etc.)
 3. On iOS: tap **Share → Add to Home Screen** for a full PWA-like experience
 4. That's it — no login, no install.
@@ -57,8 +57,15 @@ A **self-contained, offline-capable mobile workout tracker** built as a single H
 
 ```
 Workout-Plan/
-├── workout2.0.html   # The entire app — HTML + CSS + JavaScript in one file
-└── README.md         # This file
+├── index.html          # Main HTML entry point
+├── css/
+│   └── style.css       # All styles extracted
+├── js/
+│   └── app.js          # Core app logic & data fetching
+├── animations/         # Folder holding 25 individual SVG animation files
+│   ├── db_flat_bench.svg
+│   ├── ...
+├── README.md           # This file
 ```
 
 ---
@@ -140,7 +147,7 @@ To use your own:
 This section is maintained by the AI agent to preserve context across chat sessions.
 
 ### Goal & Project Scope
-The goal of this project is to maintain a single-file, offline-capable mobile workout tracker (`workout2.0.html`) that allows users to seamlessly log their Push/Pull/Legs or Vacation workouts, track progression via local storage, view animated SVG exercise demonstrations, and optionally sync data to Google Sheets.
+The goal of this project is to maintain an offline-capable mobile workout tracker that allows users to seamlessly log their Push/Pull/Legs or Vacation workouts, track progression via local storage, view animated SVG exercise demonstrations, and optionally sync data to Google Sheets. The project follows a standard web structure with extracted CSS, JS, and individual SVG animations.
 
 ### Recent Changes
 

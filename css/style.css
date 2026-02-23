@@ -1,0 +1,334 @@
+body {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .active-tab {
+            color: #dc2626;
+        }
+
+        .ex-eye {
+            fill: #ffffff;
+        }
+
+        .dark .ex-eye {
+            fill: #1e293b;
+        }
+
+        .active-tab i {
+            font-weight: bold;
+        }
+
+        .tap-scale:active {
+            transform: scale(0.96);
+            transition: transform 0.05s;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stepper-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 900;
+            transition: all 0.1s;
+        }
+
+        .btn-gray {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+
+        .btn-gray:active {
+            background-color: #e5e7eb;
+        }
+
+        .btn-red {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fee2e2;
+        }
+
+        .dark .btn-gray {
+            background-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .dark .btn-gray:active {
+            background-color: #475569;
+        }
+
+        .dark .btn-red {
+            background-color: #450a0a;
+            color: #fca5a5;
+            border-color: #7f1d1d;
+        }
+
+        .timer-btn {
+            transition: all 0.2s;
+            border-width: 2px;
+        }
+
+        .timer-selected {
+            background-color: #dc2626;
+            color: white;
+            border-color: #dc2626;
+        }
+
+        .dark .timer-selected {
+            background-color: #991b1b;
+            color: white;
+            border-color: #991b1b;
+        }
+
+        .timer-inactive {
+            background-color: transparent;
+            color: #6b7280;
+            border-color: #e5e7eb;
+        }
+
+        .dark .timer-inactive {
+            background-color: #1e293b;
+            color: #9ca3af;
+            border-color: #374151;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #visual-modal {
+            transition: opacity 0.2s ease-in-out, pointer-events 0.2s;
+        }
+
+        #visual-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #visual-modal.flex {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Vacation Mode Styles */
+        .vacation-mode .header-bg {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+        }
+
+        .dark.vacation-mode .header-bg {
+            background-color: #172554;
+            border-color: #1e3a8a;
+        }
+
+        .vacation-mode #bottom-nav {
+            display: none !important;
+        }
+
+        /* Ring Timer */
+        #timer-ring-wrap {
+            position: relative;
+            width: 72px;
+            height: 72px;
+            cursor: pointer;
+        }
+
+        #timer-ring-wrap svg {
+            transform: rotate(-90deg);
+        }
+
+        #timer-ring-center {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-weight: 900;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        #ring-track {
+            transition: stroke 0.3s;
+        }
+
+        #ring-fill {
+            transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
+        }
+
+        /* Progress Bar */
+        .ex-progress-bar {
+            height: 4px;
+            border-radius: 999px;
+            background: #e5e7eb;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+        }
+
+        .dark .ex-progress-bar {
+            background: #334155;
+        }
+
+        .ex-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: #dc2626;
+            transition: width 0.4s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .vacation-mode .ex-progress-fill {
+            background: #2563eb;
+        }
+
+        /* PR Badge */
+        .pr-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            background: #fef9c3;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            padding: 2px 8px;
+            border-radius: 999px;
+            animation: pr-pulse 1.5s ease-in-out infinite;
+        }
+
+        .dark .pr-badge {
+            background: #451a03;
+            color: #fbbf24;
+            border-color: #78350f;
+        }
+
+        @keyframes pr-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Notes Textarea */
+        .notes-area {
+            width: 100%;
+            min-height: 60px;
+            font-size: 0.8rem;
+            border-radius: 12px;
+            border: 1.5px solid #e5e7eb;
+            padding: 10px 12px;
+            resize: vertical;
+            outline: none;
+            font-family: inherit;
+            color: #374151;
+            background: #f9fafb;
+            transition: border-color 0.15s;
+        }
+
+        .dark .notes-area {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .notes-area:focus {
+            border-color: #dc2626;
+        }
+
+        .dark .notes-area:focus {
+            border-color: #f87171;
+        }
+
+        /* Summary Modal */
+        #summary-modal {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        #summary-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        #summary-modal.flex {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Toast */
+        #app-toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+            pointer-events: none;
+        }
+
+        #app-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Confirm Dialog */
+        #confirm-dialog {
+            transition: opacity 0.2s ease;
+        }
+
+        #confirm-dialog.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #confirm-dialog.flex {
+            opacity: 1;
+        }

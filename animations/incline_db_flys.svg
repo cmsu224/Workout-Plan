@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" class="w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round">
+  <rect x="20" y="40" width="8" height="35" transform="rotate(-30 20 40)" fill="currentColor" opacity="0.2"/><rect x="20" y="70" width="40" height="8" fill="currentColor" opacity="0.2"/>
+  <circle cx="38" cy="30" r="7" fill="currentColor"/><circle cx="35" cy="28" r="2.5" class="ex-eye"/>
+  <line x1="38" y1="37" x2="52" y2="65" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+  <path d="M 52 65 L 70 65 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" values="0 45 45; -40 45 45; 0 45 45" dur="2.5s" repeatCount="indefinite" />
+    <line x1="45" y1="45" x2="45" y2="15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+    <g transform="translate(45,15)"><rect x="-4" y="-8" width="8" height="16" rx="2" fill="currentColor"/></g>
+  </g>
+</svg>

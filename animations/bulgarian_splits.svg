@@ -1,0 +1,16 @@
+<svg viewBox="0 0 100 100" class="w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round">
+  <rect x="70" y="65" width="20" height="8" fill="currentColor" opacity="0.2"/>
+  <rect x="75" y="73" width="6" height="27" fill="currentColor" opacity="0.2"/>
+  
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,20; 0,0" dur="2s" repeatCount="indefinite"/>
+    <circle cx="40" cy="25" r="7" fill="currentColor"/><circle cx="43" cy="23" r="2.5" class="ex-eye"/>
+    <line x1="40" y1="32" x2="40" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+    <line x1="40" y1="35" x2="40" y2="65" stroke="currentColor" stroke-width="6" stroke-linecap="round"/> <!-- Arm -->
+    <g transform="translate(40,65)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
+  </g>
+  <g stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none">
+    <animate attributeName="d" values="M 40 60 L 30 95 M 40 60 L 80 60; M 40 80 L 20 80 L 30 95 M 40 80 L 60 80 L 80 60; M 40 60 L 30 95 M 40 60 L 80 60" dur="2s" repeatCount="indefinite" />
+    <path d="M 40 60 L 30 95 M 40 60 L 80 60" />
+  </g>
+</svg>

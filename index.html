@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PPL PRO ANALYTICS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0f172a',
+                        darkcard: '#1e293b',
+                        darkinput: '#334155'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body
+    class="bg-gray-50 dark:bg-darkbg min-h-screen text-gray-900 dark:text-gray-100 font-sans pb-40 selection:bg-red-200 transition-colors duration-300">
+
+    <!-- HEADER -->
+    <div id="main-header"
+        class="header-bg sticky top-0 z-40 bg-white/95 dark:bg-darkbg/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
+        <div class="px-4 py-3">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1
+                        class="text-xl font-black tracking-tighter text-gray-900 dark:text-white flex items-center gap-2">
+                        <span id="app-title">PPL <span class="text-red-600">PRO</span></span>
+                        <span id="vacation-badge"
+                            class="hidden text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full uppercase tracking-wide">Vacation</span>
+                    </h1>
+                    <div id="sync-status"
+                        class="flex items-center gap-2 text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mt-1">
+                        <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="status-dot"></div>
+                        <span id="status-text">Connecting...</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                    <button onclick="toggleVacationMode()"
+                        class="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
+                        <i id="vacation-icon" class="ph-bold ph-airplane-tilt text-sm"></i>
+                    </button>
+                    <button onclick="toggleDarkMode()"
+                        class="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                        <i id="theme-icon" class="ph-bold ph-moon text-sm"></i>
+                    </button>
+                    <button onclick="toggleMute()"
+                        class="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                        <i id="mute-icon" class="ph-bold ph-bell text-sm"></i>
+                    </button>
+                    <!-- Ring Timer -->
+                    <div id="timer-ring-wrap" onclick="toggleTimerState()">
+                        <svg width="72" height="72" viewBox="0 0 72 72">
+                            <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
+                                stroke-width="5" />
+                            <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626" stroke-width="5"
+                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" />
+                        </svg>
+                        <div id="timer-ring-center">
+                            <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar items-center">
+                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase mr-1">Rest:</span>
+                <button onclick="adjustTimer(-15)"
+                    class="timer-btn timer-inactive text-xs font-bold px-3 py-3 rounded-xl min-w-[44px] tap-scale">-15s</button>
+                <button onclick="setRestTime(60)" id="t-60"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">60s</button>
+                <button onclick="setRestTime(90)" id="t-90"
+                    class="timer-btn timer-selected text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">90s</button>
+                <button onclick="setRestTime(120)" id="t-120"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">2m</button>
+                <button onclick="setRestTime(300)" id="t-300"
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">5m</button>
+                <button onclick="adjustTimer(15)"
+                    class="timer-btn timer-inactive text-xs font-bold px-3 py-3 rounded-xl min-w-[44px] tap-scale">+15s</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-container" class="p-4 max-w-xl mx-auto space-y-6 fade-in"></main>
+
+    <!-- TOAST -->
+    <div id="app-toast">
+        <div id="toast-inner"
+            class="px-5 py-3 rounded-2xl text-sm font-bold shadow-xl text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900">
+        </div>
+    </div>
+
+    <!-- CONFIRM DIALOG -->
+    <div id="confirm-dialog"
+        class="hidden fixed inset-0 z-50 bg-black/70 flex items-end justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl p-6">
+            <p id="confirm-msg" class="text-lg font-black text-gray-900 dark:text-white text-center mb-6"></p>
+            <div class="flex gap-3">
+                <button onclick="confirmCancel()"
+                    class="flex-1 py-4 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-sm uppercase tracking-wide tap-scale">Cancel</button>
+                <button id="confirm-ok-btn"
+                    class="flex-1 py-4 rounded-2xl bg-red-600 text-white font-bold text-sm uppercase tracking-wide tap-scale">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUMMARY MODAL -->
+    <div id="summary-modal"
+        class="hidden fixed inset-0 z-50 bg-black/70 flex items-end justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white dark:bg-darkcard w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-gray-100 dark:border-gray-700">
+                <h3 class="text-xl font-black text-gray-900 dark:text-white uppercase tracking-tight">Workout Summary
+                </h3>
+            </div>
+            <div class="p-6 space-y-3 max-h-72 overflow-y-auto" id="summary-body"></div>
+            <div class="p-4 flex gap-3 border-t border-gray-100 dark:border-gray-700">
+                <button onclick="closeSummaryModal()"
+                    class="flex-1 py-4 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-bold text-sm uppercase tracking-wide tap-scale">Cancel</button>
+                <button id="summary-confirm-btn"
+                    class="flex-1 py-4 rounded-2xl bg-gray-900 dark:bg-red-600 text-white font-bold text-sm uppercase tracking-wide tap-scale">Sync
+                    ↑</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISUAL MODAL -->
+    <div id="visual-modal"
+        class="hidden fixed inset-0 z-50 bg-black/90 items-center justify-center p-6 backdrop-blur-sm">
+        <div
+            class="bg-white dark:bg-darkcard w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform transition-all flex flex-col max-h-[80vh]">
+            <div
+                class="flex justify-between items-center p-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-darkcard sticky top-0 z-10">
+                <h3 id="modal-title"
+                    class="text-lg font-black text-gray-900 dark:text-white uppercase tracking-tight truncate pr-4">
+                    Exercise</h3>
+                <button onclick="closeModal()"
+                    class="p-2 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-500 dark:text-gray-300 hover:bg-red-50 hover:text-red-500 transition-colors flex-shrink-0">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div
+                class="flex-1 bg-white dark:bg-black flex items-center justify-center overflow-hidden relative min-h-[300px]">
+                <div id="visual-container" class="w-full h-full flex items-center justify-center p-4"></div>
+                <img id="visual-img" src="" alt="Exercise Visual" class="w-full h-full object-contain hidden"
+                    onerror="handleImageError(this)">
+            </div>
+            <div class="p-4 bg-white dark:bg-darkcard">
+                <button onclick="searchGoogleImages()"
+                    class="w-full py-4 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-2xl font-bold text-sm uppercase tracking-wide shadow-sm tap-scale flex items-center justify-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="ph-bold ph-magnifying-glass"></i> Search Alternatives
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV (HIDDEN IN VACATION MODE) -->
+    <nav id="bottom-nav"
+        class="fixed bottom-0 left-0 right-0 bg-white dark:bg-darkbg border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-40 pb-safe pt-2 shadow-[0_-5px_30px_rgba(0,0,0,0.05)] transition-colors duration-300">
+        <button onclick="setView('Push')" id="nav-Push"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+            <i class="ph-bold ph-barbell text-2xl"></i>
+            <span class="text-[10px] font-black uppercase tracking-wide">Push</span>
+        </button>
+        <button onclick="setView('Pull')" id="nav-Pull"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+            <i class="ph-bold ph-rows text-2xl"></i>
+            <span class="text-[10px] font-black uppercase tracking-wide">Pull</span>
+        </button>
+        <button onclick="setView('Legs')" id="nav-Legs"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+            <i class="ph-bold ph-lightning text-2xl"></i>
+            <span class="text-[10px] font-black uppercase tracking-wide">Legs</span>
+        </button>
+        <button onclick="setView('History')" id="nav-History"
+            class="nav-btn flex-1 py-4 flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+            <i class="ph-bold ph-chart-line-up text-2xl"></i>
+            <span class="text-[10px] font-black uppercase tracking-wide">Logs</span>
+        </button>
+    </nav>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

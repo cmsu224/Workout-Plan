@@ -2,212 +2,136 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVG Animation Test</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Animation Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: system-ui;
-            background: #f1f5f9;
-            color: #1e293b;
-            padding: 20px;
-        }
+    body {
+      font-family: system-ui;
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 20px;
+    }
 
-        body.dark {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
+    body.dark {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-        .controls {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        .controls button {
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background: #fff;
-        }
+    .controls button {
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
 
-        body.dark .controls button {
-            background: #334155;
-            color: #e2e8f0;
-            border-color: #475569;
-        }
+    body.dark .controls button {
+      background: #334155;
+      color: #e2e8f0;
+      border-color: #475569;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-        }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
 
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-        body.dark .card {
-            background: #1e293b;
-        }
+    body.dark .card {
+      background: #1e293b;
+    }
 
-        .card h3 {
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
+    .card h3 {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
 
-        .card .svg-wrap {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-        }
+    .card .svg-wrap {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+    }
 
-        /* Eye class - must contrast with head fill */
-        .ex-eye {
-            fill: #ffffff;
-        }
+    /* Eye class - must contrast with head fill */
+    .ex-eye {
+      fill: #ffffff;
+    }
 
-        .dark .ex-eye {
-            fill: #1e293b;
-        }
-    </style>
+    .dark .ex-eye {
+      fill: #1e293b;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>Exercise Animation Test</h1>
-    <div class="controls">
-        <button onclick="document.body.classList.toggle('dark')">Toggle Dark Mode</button>
-    </div>
-    <div class="grid" id="grid"></div>
+  <h1>Exercise Animation Test</h1>
+  <div class="controls">
+    <button onclick="document.body.classList.toggle('dark')">Toggle Dark Mode</button>
+  </div>
+  <div class="grid" id="grid"></div>
 
-    <script>
+  <script>
         const exerciseSVGs = {
-            "DB Flat Bench": `<svg viewBox="0 0 100 100" class="w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <rect x="10" y="65" width="80" height="8" fill="currentColor" opacity="0.2"/><rect x="25" y="73" width="6" height="27" fill="currentColor" opacity="0.2"/><rect x="69" y="73" width="6" height="27" fill="currentColor" opacity="0.2"/>
-  <circle cx="25" cy="61" r="7" fill="currentColor"/><circle cx="22" cy="59" r="2.5" class="ex-eye"/>
-  <line x1="32" y1="61" x2="70" y2="61" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 70 61 L 85 61 L 85 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-30; 0,0" dur="2s" repeatCount="indefinite" />
-    <line x1="45" y1="60" x2="45" y2="30" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <g transform="translate(45,30)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
-  </g>
-</svg>`,
-            "Lateral Raises": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
-  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <g>
-    <animateTransform attributeName="transform" type="rotate" values="0 50 33; 60 50 33; 0 50 33" dur="2s" repeatCount="indefinite" />
-    <line x1="50" y1="33" x2="20" y2="60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <g transform="translate(20,60) rotate(45)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
-  </g>
-  <g>
-    <animateTransform attributeName="transform" type="rotate" values="0 50 33; -60 50 33; 0 50 33" dur="2s" repeatCount="indefinite" />
-    <line x1="50" y1="33" x2="80" y2="60" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <g transform="translate(80,60) rotate(-45)"><line x1="-10" y1="0" x2="10" y2="0" stroke="currentColor" stroke-width="4"/><rect x="-12" y="-6" width="4" height="12" fill="currentColor"/><rect x="8" y="-6" width="4" height="12" fill="currentColor"/></g>
-  </g>
-</svg>`,
-            "Pull-Ups": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <line x1="20" y1="15" x2="80" y2="15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0,30; 0,0; 0,30" dur="2s" repeatCount="indefinite"/>
-    <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
-    <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 50 60 L 45 85 M 50 60 L 55 85" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-    <path d="M 50 33 L 30 15 M 50 33 L 70 15" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>
-  </g>
-</svg>`,
-            "Hammer Curls": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
-  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <line x1="50" y1="35" x2="40" y2="55" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-  <g>
-    <animateTransform attributeName="transform" type="rotate" values="0 40 55; 100 40 55; 0 40 55" dur="2s" repeatCount="indefinite" />
-    <line x1="40" y1="55" x2="40" y2="85" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <g transform="translate(40,85)"><rect x="-4" y="-10" width="8" height="20" rx="2" fill="currentColor"/></g>
-  </g>
-</svg>`,
-            "Goblet Squats": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
-    <circle cx="50" cy="15" r="8" fill="currentColor"/><circle cx="53" cy="13" r="2.5" class="ex-eye"/>
-    <line x1="50" y1="23" x2="50" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 50 28 L 58 38 L 50 43" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/>
-    <rect x="46" y="40" width="8" height="14" rx="2" fill="currentColor" opacity="0.6"/>
-    <path d="M 50 50 L 35 75 L 35 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-    <path d="M 50 50 L 65 75 L 65 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-  </g>
-</svg>`,
-            "DB Lunges": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
-    <circle cx="50" cy="10" r="7" fill="currentColor"/><circle cx="53" cy="8" r="2.5" class="ex-eye"/>
-    <line x1="50" y1="17" x2="50" y2="45" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-    <line x1="50" y1="22" x2="50" y2="52" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <rect x="46" y="48" width="8" height="14" rx="2" fill="currentColor" opacity="0.6"/>
-    <path d="M 50 45 L 30 70 L 30 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-    <path d="M 50 45 L 70 70 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-  </g>
-</svg>`,
-            "Lunges": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <g>
-    <animateTransform attributeName="transform" type="translate" values="0,0; 0,15; 0,0" dur="2.5s" repeatCount="indefinite"/>
-    <circle cx="50" cy="10" r="7" fill="currentColor"/><circle cx="53" cy="8" r="2.5" class="ex-eye"/>
-    <line x1="50" y1="17" x2="50" y2="45" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-    <path d="M 50 45 L 30 70 L 30 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-    <path d="M 50 45 L 70 70 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-  </g>
-</svg>`,
-            "Banded Pushdowns": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <circle cx="50" cy="25" r="8" fill="currentColor"/><circle cx="53" cy="23" r="2.5" class="ex-eye"/>
-  <line x1="50" y1="33" x2="50" y2="60" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 50 60 L 45 90 M 50 60 L 55 90" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <rect x="75" y="5" width="10" height="10" rx="2" fill="currentColor" opacity="0.2"/>
-  <line x1="50" y1="35" x2="65" y2="40" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-  <g>
-    <animateTransform attributeName="transform" type="rotate" values="0 65 40; -45 65 40; 0 65 40" dur="2s" repeatCount="indefinite" />
-    <line x1="65" y1="40" x2="65" y2="65" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <line x1="65" y1="65" x2="80" y2="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2" opacity="0.5"/>
-  </g>
-</svg>`,
-            "Incline DB Flys": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" stroke-linejoin="round" style="color: currentColor;">
-  <rect x="20" y="40" width="8" height="35" transform="rotate(-30 20 40)" fill="currentColor" opacity="0.2"/><rect x="20" y="70" width="40" height="8" fill="currentColor" opacity="0.2"/>
-  <circle cx="38" cy="30" r="7" fill="currentColor"/><circle cx="35" cy="28" r="2.5" class="ex-eye"/>
-  <line x1="38" y1="37" x2="52" y2="65" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-  <path d="M 52 65 L 70 65 L 70 95" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
-  <g>
-    <animateTransform attributeName="transform" type="rotate" values="0 45 45; -40 45 45; 0 45 45" dur="2.5s" repeatCount="indefinite" />
-    <line x1="45" y1="45" x2="45" y2="15" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-    <g transform="translate(45,15)"><rect x="-4" y="-8" width="8" height="16" rx="2" fill="currentColor"/></g>
-  </g>
-</svg>`
+            "DB Flat Bench": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"10\" y=\"65\" width=\"80\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"25\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"69\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"25\" cy=\"61\" r=\"7\" fill=\"currentColor\"/><circle cx=\"22\" cy=\"59\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"32\" y1=\"61\" x2=\"70\" y2=\"61\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 70 61 L 85 61 L 85 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,-30; 0,0\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"45\" y1=\"60\" x2=\"45\" y2=\"30\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(45,30)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Seated DB Press": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"35\" y=\"30\" width=\"8\" height=\"40\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"35\" y=\"65\" width=\"30\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"48\" cy=\"25\" r=\"7\" fill=\"currentColor\"/><circle cx=\"52\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"48\" y1=\"32\" x2=\"48\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 48 65 L 65 65 L 65 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,-25; 0,0\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"48\" y1=\"40\" x2=\"48\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(48,15)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Incline DB Flys": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"20\" y=\"40\" width=\"8\" height=\"35\" transform=\"rotate(-30 20 40)\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"20\" y=\"70\" width=\"40\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"38\" cy=\"30\" r=\"7\" fill=\"currentColor\"/><circle cx=\"35\" cy=\"28\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"38\" y1=\"37\" x2=\"52\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 52 65 L 70 65 L 70 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 45 45; -40 45 45; 0 45 45\" dur=\"2.5s\" repeatCount=\"indefinite\" />\n    <line x1=\"45\" y1=\"45\" x2=\"45\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(45,15)\"><rect x=\"-4\" y=\"-8\" width=\"8\" height=\"16\" rx=\"2\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Lateral Raises": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 33; 60 50 33; 0 50 33\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"50\" y1=\"33\" x2=\"20\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(20,60) rotate(45)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 33; -60 50 33; 0 50 33\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"50\" y1=\"33\" x2=\"80\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(80,60) rotate(-45)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Skull Crushers": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"10\" y=\"65\" width=\"80\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"25\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"69\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"25\" cy=\"61\" r=\"7\" fill=\"currentColor\"/><circle cx=\"22\" cy=\"59\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"32\" y1=\"61\" x2=\"70\" y2=\"61\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 70 61 L 85 61 L 85 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <line x1=\"40\" y1=\"60\" x2=\"40\" y2=\"35\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g>\n      <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 40 35; -60 40 35; 0 40 35\" dur=\"2s\" repeatCount=\"indefinite\" />\n      <line x1=\"40\" y1=\"35\" x2=\"40\" y2=\"10\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n      <g transform=\"translate(40,10) rotate(90)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n    </g>\n  </g>\n</svg>",
+            "Banded Pushdowns": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <rect x=\"75\" y=\"5\" width=\"10\" height=\"10\" rx=\"2\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <line x1=\"50\" y1=\"35\" x2=\"65\" y2=\"40\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 65 40; -45 65 40; 0 65 40\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"65\" y1=\"40\" x2=\"65\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <line x1=\"65\" y1=\"65\" x2=\"80\" y2=\"10\" stroke=\"currentColor\" stroke-width=\"2\" stroke-dasharray=\"4 2\" opacity=\"0.5\"/>\n  </g>\n</svg>",
+            "Pull-Ups": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <!-- Bar -->\n  <line x1=\"20\" y1=\"15\" x2=\"80\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,30; 0,0; 0,30\" dur=\"2s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 60 L 45 85 M 50 60 L 55 85\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n    <path d=\"M 50 33 L 30 15 M 50 33 L 70 15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/>\n  </g>\n</svg>",
+            "One-Arm Row": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <!-- Bench -->\n  <rect x=\"20\" y=\"65\" width=\"40\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"25\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"50\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  \n  <circle cx=\"20\" cy=\"40\" r=\"7\" fill=\"currentColor\"/><circle cx=\"17\" cy=\"38\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"25\" y1=\"45\" x2=\"60\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <line x1=\"60\" y1=\"55\" x2=\"60\" y2=\"95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/> <!-- Standing leg -->\n  <path d=\"M 40 50 L 30 65 L 50 65\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/> <!-- Knee on bench -->\n  \n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; -10,-20; 0,0\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"35\" y1=\"48\" x2=\"35\" y2=\"75\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(35,75)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "DB Pullovers": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <!-- Bench crosswise -->\n  <rect x=\"40\" y=\"55\" width=\"20\" height=\"45\" fill=\"currentColor\" opacity=\"0.2\"/>\n  \n  <!-- Person Lying -->\n  <circle cx=\"80\" cy=\"50\" r=\"7\" fill=\"currentColor\"/><circle cx=\"83\" cy=\"48\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"73\" y1=\"50\" x2=\"30\" y2=\"50\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 30 50 L 20 70 L 20 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  \n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 50; 60 50 50; 0 50 50\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"50\" y1=\"50\" x2=\"50\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(50,15) rotate(90)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Rear Delt Flys": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"35\" cy=\"35\" r=\"7\" fill=\"currentColor\"/><circle cx=\"32\" cy=\"33\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"38\" y1=\"40\" x2=\"60\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 60 60 L 50 90 M 60 60 L 70 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  \n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 45 45; -50 45 45; 0 45 45\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"45\" y1=\"45\" x2=\"45\" y2=\"80\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(45,80)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Bicep Curls": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <line x1=\"50\" y1=\"35\" x2=\"40\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 40 55; 100 40 55; 0 40 55\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"40\" y1=\"55\" x2=\"40\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(40,85)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Hammer Curls": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <line x1=\"50\" y1=\"35\" x2=\"40\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 40 55; 100 40 55; 0 40 55\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"40\" y1=\"55\" x2=\"40\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(40,85)\"><rect x=\"-4\" y=\"-10\" width=\"8\" height=\"20\" rx=\"2\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Goblet Squats": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,15; 0,0\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"15\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"13\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"23\" x2=\"50\" y2=\"50\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 28 L 58 38 L 50 43\" stroke=\"currentColor\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/>\n    <rect x=\"46\" y=\"40\" width=\"8\" height=\"14\" rx=\"2\" fill=\"currentColor\" opacity=\"0.6\"/>\n    <path d=\"M 50 50 L 35 75 L 35 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n    <path d=\"M 50 50 L 65 75 L 65 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  </g>\n</svg>",
+            "Bodyweight Squats": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,15; 0,0\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"15\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"13\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"23\" x2=\"50\" y2=\"50\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 28 L 70 28\" stroke=\"currentColor\" stroke-width=\"6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 50 L 35 75 L 35 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n    <path d=\"M 50 50 L 65 75 L 65 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  </g>\n</svg>",
+            "Bulgarian Splits": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"70\" y=\"65\" width=\"20\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"75\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  \n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,20; 0,0\" dur=\"2s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"40\" cy=\"25\" r=\"7\" fill=\"currentColor\"/><circle cx=\"43\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"40\" y1=\"32\" x2=\"40\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <line x1=\"40\" y1=\"35\" x2=\"40\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/> <!-- Arm -->\n    <g transform=\"translate(40,65)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n  <g stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\">\n    <animate attributeName=\"d\" values=\"M 40 60 L 30 95 M 40 60 L 80 60; M 40 80 L 20 80 L 30 95 M 40 80 L 60 80 L 80 60; M 40 60 L 30 95 M 40 60 L 80 60\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <path d=\"M 40 60 L 30 95 M 40 60 L 80 60\" />\n  </g>\n</svg>",
+            "DB Lunges": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <path stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\">\n    <animate attributeName=\"d\" values=\"M 50 45 L 65 60 L 75 95; M 50 65 L 75 65 L 75 95; M 50 45 L 65 60 L 75 95\" dur=\"2.5s\" repeatCount=\"indefinite\" />\n  </path>\n  <path stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\">\n    <animate attributeName=\"d\" values=\"M 50 45 L 35 65 L 25 95; M 50 65 L 50 90 L 25 95; M 50 45 L 35 65 L 25 95\" dur=\"2.5s\" repeatCount=\"indefinite\" />\n  </path>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,20; 0,0\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"15\" r=\"7\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"13\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"22\" x2=\"50\" y2=\"45\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <line x1=\"50\" y1=\"25\" x2=\"50\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(50,55)\">\n      <line x1=\"-8\" y1=\"0\" x2=\"8\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/>\n      <rect x=\"-10\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"6\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/>\n    </g>\n  </g>\n</svg>",
+            "Lunges": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <path stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\">\n    <animate attributeName=\"d\" values=\"M 50 45 L 65 60 L 75 95; M 50 65 L 75 65 L 75 95; M 50 45 L 65 60 L 75 95\" dur=\"2.5s\" repeatCount=\"indefinite\" />\n  </path>\n  <path stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\">\n    <animate attributeName=\"d\" values=\"M 50 45 L 35 65 L 25 95; M 50 65 L 50 90 L 25 95; M 50 45 L 35 65 L 25 95\" dur=\"2.5s\" repeatCount=\"indefinite\" />\n  </path>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,20; 0,0\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"15\" r=\"7\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"13\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"22\" x2=\"50\" y2=\"45\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 25 L 40 35 L 50 45 M 50 25 L 60 35 L 50 45\" stroke=\"currentColor\" stroke-width=\"5\" stroke-linecap=\"round\" fill=\"none\"/>\n  </g>\n</svg>",
+            "DB RDLs": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 95; -15 50 95; 0 50 95\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n    <path d=\"M 50 60 L 48 80 L 48 95 M 50 60 L 52 80 L 52 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n    <g>\n      <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 60; 75 50 60; 0 50 60\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n      <circle cx=\"50\" cy=\"25\" r=\"7\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n      <line x1=\"50\" y1=\"32\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n      <g>\n        <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 50 35; -60 50 35; 0 50 35\" dur=\"2.5s\" repeatCount=\"indefinite\"/>\n        <line x1=\"50\" y1=\"35\" x2=\"50\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n        <g transform=\"translate(50,65)\">\n          <line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/>\n          <rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/>\n        </g>\n      </g>\n    </g>\n  </g>\n</svg>",
+            "Calf Raises": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,-8; 0,0\" dur=\"1.5s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n    <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  </g>\n  <!-- Step -->\n  <rect x=\"30\" y=\"90\" width=\"40\" height=\"10\" fill=\"currentColor\" opacity=\"0.3\"/>\n</svg>",
+            "Push-Ups": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 85 85; 15 85 85; 0 85 85\" dur=\"2s\" repeatCount=\"indefinite\"/>\n    <circle cx=\"20\" cy=\"65\" r=\"7\" fill=\"currentColor\"/><circle cx=\"17\" cy=\"63\" r=\"2.5\" class=\"ex-eye\"/>\n    <line x1=\"25\" y1=\"67\" x2=\"85\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/> <!-- Body -->\n    <g>\n      <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 35 70; -30 35 70; 0 35 70\" dur=\"2s\" repeatCount=\"indefinite\"/>\n      <path d=\"M 35 70 L 35 85\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/>\n    </g>\n  </g>\n  <line x1=\"10\" y1=\"85\" x2=\"90\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"2\" opacity=\"0.5\"/>\n</svg>",
+            "Plank": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"20\" cy=\"73\" r=\"7\" fill=\"currentColor\"/><circle cx=\"17\" cy=\"71\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"25\" y1=\"75\" x2=\"85\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/> <!-- Body -->\n  <path d=\"M 35 75 L 35 85 L 45 85\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\" fill=\"none\"/> <!-- Arm bent -->\n  <line x1=\"10\" y1=\"88\" x2=\"90\" y2=\"88\" stroke=\"currentColor\" stroke-width=\"2\" opacity=\"0.5\"/>\n  <g>\n    <animate attributeName=\"opacity\" values=\"0.5;1;0.5\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <path d=\"M 40 60 Q 45 50 50 60 T 60 60\" stroke=\"red\" stroke-width=\"2\" fill=\"none\"/>\n    <path d=\"M 45 55 Q 50 45 55 55 T 65 55\" stroke=\"red\" stroke-width=\"2\" fill=\"none\"/>\n  </g>\n</svg>",
+            "Band Rows": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <!-- Bench -->\n  <rect x=\"20\" y=\"65\" width=\"40\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"25\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"50\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  \n  <circle cx=\"20\" cy=\"40\" r=\"7\" fill=\"currentColor\"/><circle cx=\"17\" cy=\"38\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"25\" y1=\"45\" x2=\"60\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <line x1=\"60\" y1=\"55\" x2=\"60\" y2=\"95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/> <!-- Standing leg -->\n  <path d=\"M 40 50 L 30 65 L 50 65\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/> <!-- Knee on bench -->\n  \n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; -10,-20; 0,0\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"35\" y1=\"48\" x2=\"35\" y2=\"75\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(35,75)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Band Shoulder Press": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"35\" y=\"30\" width=\"8\" height=\"40\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <rect x=\"35\" y=\"65\" width=\"30\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"48\" cy=\"25\" r=\"7\" fill=\"currentColor\"/><circle cx=\"51\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"48\" y1=\"32\" x2=\"48\" y2=\"65\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 48 65 L 65 65 L 65 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"translate\" values=\"0,0; 0,-25; 0,0\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"48\" y1=\"40\" x2=\"48\" y2=\"15\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(48,15)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Band Bicep Curls": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <circle cx=\"50\" cy=\"25\" r=\"8\" fill=\"currentColor\"/><circle cx=\"53\" cy=\"23\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"50\" y1=\"33\" x2=\"50\" y2=\"60\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 50 60 L 45 90 M 50 60 L 55 90\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <line x1=\"50\" y1=\"35\" x2=\"40\" y2=\"55\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n  <g>\n    <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 40 55; 100 40 55; 0 40 55\" dur=\"2s\" repeatCount=\"indefinite\" />\n    <line x1=\"40\" y1=\"55\" x2=\"40\" y2=\"85\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g transform=\"translate(40,85)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n  </g>\n</svg>",
+            "Band Tricep Press": "<svg viewBox=\"0 0 100 100\" class=\"w-full h-full text-gray-800 dark:text-gray-200 object-contain p-4\" xmlns=\"http://www.w3.org/2000/svg\" stroke-linejoin=\"round\">\n  <rect x=\"10\" y=\"65\" width=\"80\" height=\"8\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"25\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/><rect x=\"69\" y=\"73\" width=\"6\" height=\"27\" fill=\"currentColor\" opacity=\"0.2\"/>\n  <circle cx=\"25\" cy=\"61\" r=\"7\" fill=\"currentColor\"/><circle cx=\"22\" cy=\"59\" r=\"2.5\" class=\"ex-eye\"/>\n  <line x1=\"32\" y1=\"61\" x2=\"70\" y2=\"61\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\"/>\n  <path d=\"M 70 61 L 85 61 L 85 95\" stroke=\"currentColor\" stroke-width=\"8\" stroke-linecap=\"round\" fill=\"none\"/>\n  <g>\n    <line x1=\"40\" y1=\"60\" x2=\"40\" y2=\"35\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n    <g>\n      <animateTransform attributeName=\"transform\" type=\"rotate\" values=\"0 40 35; -60 40 35; 0 40 35\" dur=\"2s\" repeatCount=\"indefinite\" />\n      <line x1=\"40\" y1=\"35\" x2=\"40\" y2=\"10\" stroke=\"currentColor\" stroke-width=\"6\" stroke-linecap=\"round\"/>\n      <g transform=\"translate(40,10) rotate(90)\"><line x1=\"-10\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"currentColor\" stroke-width=\"4\"/><rect x=\"-12\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/><rect x=\"8\" y=\"-6\" width=\"4\" height=\"12\" fill=\"currentColor\"/></g>\n    </g>\n  </g>\n</svg>"
         };
 
-        const grid = document.getElementById('grid');
-        for (const [name, svg] of Object.entries(exerciseSVGs)) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<h3>${name}</h3><div class="svg-wrap">${svg}</div>`;
-            grid.appendChild(card);
-        }
-    </script>
+    const grid = document.getElementById('grid');
+    for (const [name, svg] of Object.entries(exerciseSVGs)) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<h3>${name}</h3><div class="svg-wrap">${svg}</div>`;
+      grid.appendChild(card);
+    }
+  </script>
 </body>
 
 </html>

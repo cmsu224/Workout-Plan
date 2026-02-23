@@ -132,3 +132,22 @@ To use your own:
 | Band Bicep Curls | 3 | 15–20 |
 | Band Tricep Press | 3 | 15–20 |
 | Plank | 3 | 60s |
+
+---
+
+## 🤖 AI Agent Changelog & Context
+
+This section is maintained by the AI agent to preserve context across chat sessions.
+
+### Goal & Project Scope
+The goal of this project is to maintain a single-file, offline-capable mobile workout tracker (`workout2.0.html`) that allows users to seamlessly log their Push/Pull/Legs or Vacation workouts, track progression via local storage, view animated SVG exercise demonstrations, and optionally sync data to Google Sheets.
+
+### Recent Changes
+
+*   **Exercise Animations Audit (Current Session):**
+    *   Verified the master list of exactly 25 exercises defined in this README.
+    *   Synced all 25 exercises from `workout2.0.html` to `test_animations.html` for comprehensive visual testing.
+    *   Fixed incorrect SVG mechanics for **DB RDLs** (torso bend, straight arms), **DB Lunges** (split stance, knee drops, dumbbells at side), and **Lunges** (split stance).
+    *   Verified the graphical accuracy of complex moves like **Incline DB Flys**, **Goblet Squats**, **DB Pullovers**, **Hammer Curls**, and **Banded Pushdowns** via browser subagent.
+    *   All SVGs in the master `workout2.0.html` file now reflect the corrected, reviewed, and finalized animations.
+

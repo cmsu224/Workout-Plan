@@ -375,51 +375,48 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5">
                     <button onclick="toggleVacationMode()"
-                        class="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
-                        <i id="vacation-icon" class="ph-bold ph-airplane-tilt"></i>
+                        class="p-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
+                        <i id="vacation-icon" class="ph-bold ph-airplane-tilt text-sm"></i>
                     </button>
                     <button onclick="toggleDarkMode()"
-                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
-                        <i id="theme-icon" class="ph-bold ph-moon"></i>
+                        class="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                        <i id="theme-icon" class="ph-bold ph-moon text-sm"></i>
                     </button>
                     <button onclick="toggleMute()"
-                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
-                        <i id="mute-icon" class="ph-bold ph-bell"></i>
+                        class="p-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                        <i id="mute-icon" class="ph-bold ph-bell text-sm"></i>
                     </button>
-                    <!-- Ring Timer Quick Adjusts -->
-                    <div class="flex items-center gap-1 ml-1">
-                        <button onclick="adjustTimer(-15)"
-                            class="text-[10px] font-black text-gray-400 dark:text-gray-500 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 tap-scale">-15</button>
-                        <div id="timer-ring-wrap" onclick="toggleTimerState()">
-                            <svg width="72" height="72" viewBox="0 0 72 72">
-                                <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
-                                    stroke-width="5" />
-                                <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626"
-                                    stroke-width="5" stroke-linecap="round" stroke-dasharray="188.5"
-                                    stroke-dashoffset="188.5" />
-                            </svg>
-                            <div id="timer-display" id="timer-ring-center">
-                                <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
-                            </div>
+                    <!-- Ring Timer -->
+                    <div id="timer-ring-wrap" onclick="toggleTimerState()">
+                        <svg width="72" height="72" viewBox="0 0 72 72">
+                            <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
+                                stroke-width="5" />
+                            <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626" stroke-width="5"
+                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" />
+                        </svg>
+                        <div id="timer-ring-center">
+                            <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
                         </div>
-                        <button onclick="adjustTimer(15)"
-                            class="text-[10px] font-black text-gray-400 dark:text-gray-500 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 tap-scale">+15</button>
                     </div>
                 </div>
             </div>
 
             <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar items-center">
-                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase mr-1">Auto-Rest:</span>
+                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase mr-1">Rest:</span>
+                <button onclick="adjustTimer(-15)"
+                    class="timer-btn timer-inactive text-xs font-bold px-3 py-3 rounded-xl min-w-[44px] tap-scale">-15s</button>
                 <button onclick="setRestTime(60)" id="t-60"
-                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">60s</button>
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">60s</button>
                 <button onclick="setRestTime(90)" id="t-90"
-                    class="timer-btn timer-selected text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">90s</button>
+                    class="timer-btn timer-selected text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">90s</button>
                 <button onclick="setRestTime(120)" id="t-120"
-                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">2m</button>
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">2m</button>
                 <button onclick="setRestTime(300)" id="t-300"
-                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[60px] tap-scale">5m</button>
+                    class="timer-btn timer-inactive text-xs font-bold px-4 py-3 rounded-xl flex-1 min-w-[50px] tap-scale">5m</button>
+                <button onclick="adjustTimer(15)"
+                    class="timer-btn timer-inactive text-xs font-bold px-3 py-3 rounded-xl min-w-[44px] tap-scale">+15s</button>
             </div>
         </div>
     </div>

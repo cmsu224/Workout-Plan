@@ -4,6 +4,9 @@ A **self-contained, offline-capable mobile workout tracker** built as a single H
 
 🔗 **Live App:** [https://cmsu224.github.io/Workout-Plan/workout2.0.html](https://cmsu224.github.io/Workout-Plan/workout2.0.html)
 
+> [!NOTE]
+> **AI Agent Rule:** Always push changes to GitHub automatically after any code modifications. The live app updates via GitHub Pages on every push to `main`.
+
 ---
 
 ## 📱 How to Use (Mobile)

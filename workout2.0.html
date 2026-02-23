@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -374,7 +375,7 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
                     <button onclick="toggleVacationMode()"
                         class="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 tap-scale border border-blue-100 dark:border-blue-900">
                         <i id="vacation-icon" class="ph-bold ph-airplane-tilt"></i>
@@ -383,17 +384,28 @@
                         class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
                         <i id="theme-icon" class="ph-bold ph-moon"></i>
                     </button>
-                    <!-- Ring Timer -->
-                    <div id="timer-ring-wrap" onclick="toggleTimerState()">
-                        <svg width="72" height="72" viewBox="0 0 72 72">
-                            <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
-                                stroke-width="5" />
-                            <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626" stroke-width="5"
-                                stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="188.5" />
-                        </svg>
-                        <div id="timer-display" id="timer-ring-center">
-                            <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
+                    <button onclick="toggleMute()"
+                        class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700">
+                        <i id="mute-icon" class="ph-bold ph-bell"></i>
+                    </button>
+                    <!-- Ring Timer Quick Adjusts -->
+                    <div class="flex items-center gap-1 ml-1">
+                        <button onclick="adjustTimer(-15)"
+                            class="text-[10px] font-black text-gray-400 dark:text-gray-500 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 tap-scale">-15</button>
+                        <div id="timer-ring-wrap" onclick="toggleTimerState()">
+                            <svg width="72" height="72" viewBox="0 0 72 72">
+                                <circle id="ring-track" cx="36" cy="36" r="30" fill="none" stroke="#e5e7eb"
+                                    stroke-width="5" />
+                                <circle id="ring-fill" cx="36" cy="36" r="30" fill="none" stroke="#dc2626"
+                                    stroke-width="5" stroke-linecap="round" stroke-dasharray="188.5"
+                                    stroke-dashoffset="188.5" />
+                            </svg>
+                            <div id="timer-display" id="timer-ring-center">
+                                <span id="timer-text" class="text-gray-800 dark:text-gray-100">00:00</span>
+                            </div>
                         </div>
+                        <button onclick="adjustTimer(15)"
+                            class="text-[10px] font-black text-gray-400 dark:text-gray-500 p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 tap-scale">+15</button>
                     </div>
                 </div>
             </div>
@@ -595,6 +607,7 @@
         let timerPaused = false;
         let endTime = 0;
         let timeLeft = 0;
+        let isMuted = localStorage.getItem('isMuted') === 'true';
 
         let exerciseCategoryMap = {};
         function updateMap() {
@@ -605,12 +618,31 @@
 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playBeep() {
+            if (isMuted) return;
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.value = 880; gain.gain.value = 0.1;
             osc.start(); setTimeout(() => osc.stop(), 500);
             if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            localStorage.setItem('isMuted', isMuted);
+            updateMuteIcon();
+        }
+
+        function updateMuteIcon() {
+            const icon = document.getElementById('mute-icon');
+            if (!icon) return;
+            if (isMuted) {
+                icon.classList.remove('ph-bell');
+                icon.classList.add('ph-bell-slash');
+            } else {
+                icon.classList.remove('ph-bell-slash');
+                icon.classList.add('ph-bell');
+            }
         }
 
         function initTheme() {
@@ -672,6 +704,7 @@
             initTheme();
             applyVacationMode();
             updateMap();
+            updateMuteIcon();
             setRestTime(defaultRestTime);
 
             const today = new Date().toDateString();
@@ -1042,11 +1075,14 @@
             localStorage.setItem(`W-${name}`, newWeight);
             document.getElementById(`w-disp-${name}`).value = newWeight;
 
-            // Update PR badge live
+            // Update PR badge live & Fire Confetti
             const prevWeight = cloudHistory[name] ? cloudHistory[name].weight : null;
             const badgeEl = document.getElementById(`pr-badge-${name}`);
             if (badgeEl && prevWeight !== null) {
-                badgeEl.innerHTML = newWeight > prevWeight ? `<span class="pr-badge">⚡ New PR!</span>` : '';
+                const isPR = newWeight > prevWeight;
+                badgeEl.innerHTML = isPR ? `<span class="pr-badge">⚡ New PR!</span>` : '';
+                // Confetti if stepping up into PR territory
+                if (isPR && direction > 0) confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 }, colors: ['#fbbf24', '#f59e0b', '#d97706'], zIndex: 9999 });
             }
         }
 
@@ -1148,6 +1184,8 @@
             }
 
             showToast(isVacationMode ? '✓ Session complete!' : '☁ Synced!', 'success');
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, zIndex: 9999, disableForReducedMotion: true });
+
             if (!isVacationMode) await init();
             setTimeout(() => setView(isVacationMode ? 'FullBody' : day), 1200);
             isSaving = false;
@@ -1160,17 +1198,53 @@
                 container.innerHTML = `
                     <div class="flex items-center justify-between mb-8 px-2">
                         <h2 class="text-4xl font-black text-gray-900 dark:text-white uppercase italic tracking-tighter">Logs</h2>
-                        <select id="log-filter" onchange="renderFilteredCharts()" class="bg-white dark:bg-darkcard dark:text-gray-100 border-2 border-gray-200 dark:border-gray-700 text-xs font-bold uppercase rounded-xl px-4 py-3 outline-none text-gray-700">
-                            <option value="All">All Logs</option>
-                            <option value="Push" ${lastWorkoutMode === 'Push' ? 'selected' : ''}>Push</option>
-                            <option value="Pull" ${lastWorkoutMode === 'Pull' ? 'selected' : ''}>Pull</option>
-                            <option value="Legs" ${lastWorkoutMode === 'Legs' ? 'selected' : ''}>Legs</option>
-                        </select>
+                        <div class="flex items-center gap-3">
+                            <button onclick="exportData()" class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale border border-gray-200 dark:border-gray-700" title="Backup Data"><i class="ph-bold ph-download-simple"></i></button>
+                            <label class="p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 tap-scale cursor-pointer border border-gray-200 dark:border-gray-700" title="Restore Data">
+                                <i class="ph-bold ph-upload-simple"></i>
+                                <input type="file" id="import-file" class="hidden" accept=".json" onchange="importData(event)">
+                            </label>
+                            <select id="log-filter" onchange="renderFilteredCharts()" class="bg-white dark:bg-darkcard dark:text-gray-100 border border-gray-200 dark:border-gray-700 text-[10px] font-bold uppercase rounded-xl px-3 py-2.5 outline-none text-gray-700">
+                                <option value="All">All Logs</option>
+                                <option value="Push" ${lastWorkoutMode === 'Push' ? 'selected' : ''}>Push</option>
+                                <option value="Pull" ${lastWorkoutMode === 'Pull' ? 'selected' : ''}>Pull</option>
+                                <option value="Legs" ${lastWorkoutMode === 'Legs' ? 'selected' : ''}>Legs</option>
+                            </select>
+                        </div>
                     </div>
                     <div id="charts-wrapper" class="space-y-6"></div>
                 `;
                 renderFilteredCharts();
             } catch (e) { container.innerHTML = "Error loading history."; }
+        }
+
+        function exportData() {
+            const data = JSON.stringify(localStorage);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ppl-pro-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Backup downloaded!', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
+                    showToast('Data restored! Reloading...', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } catch (err) {
+                    showToast('Invalid backup file', 'error');
+                }
+            };
+            reader.readAsText(file);
         }
 
         function renderFilteredCharts() {
@@ -1290,6 +1364,12 @@
             const s = Math.max(0, left) % 60;
             txt.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
             txt.style.color = urgent ? '#ef4444' : '';
+        }
+
+        function adjustTimer(sec) {
+            if (!timerRunning) return;
+            endTime += sec * 1000;
+            updateTimer();
         }
 
         function resetRing() {

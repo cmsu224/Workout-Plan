@@ -27,21 +27,22 @@ A **self-contained, offline-capable mobile workout tracker** built as a single H
 ### Per-Exercise Tracking
 - **Weight selector** — Snaps to Bowflex weight increments (5–90 lbs)
 - **Set tracking** — Tap "Hit X" to log reps, then fine-tune with +/− steppers
-- **Rest timer** — Auto-starts after every logged set; configurable (60s / 90s / 2m / 5m)
+- **Rest timer** — Auto-starts after every logged set; configurable (60s / 90s / 2m / 5m) + quick +/- 15s adjustments ⏱️
 - **Exercise visuals** — Animated SVG demonstrations; tap exercise name to view
 - **Per-exercise notes** 📝 — Jot form cues or reminders, saved locally
 - **Progress bar** — Track set completion at a glance on every card
-- **PR detection** ⚡ — Badge flashes when you exceed your previous best weight
+- **PR detection** ⚡ — Badge flashes and confetti pops 🎉 when you exceed your previous best weight
 - **Deload button** — Drops weight 10% to the nearest increment when needed
 
 ### History & Analytics
 - **Logs tab** — Line charts for every exercise showing weight progression over time
 - **Filter by day** — Push / Pull / Legs or All
 - **PR tracking** — Best weight highlighted on each chart
+- **Backup & Restore** 💾 — Export your local data to a `.json` file and import it anywhere
 
 ### Smart Features
 - **Auto-next routine** — Detects your last logged day and opens the next one automatically
-- **Dark mode** 🌙 — Persists across sessions
+- **Dark mode & Mute** 🌙🔕 — Persists across sessions
 - **Cloud sync** ☁️ — Posts workout data to a Google Sheets Apps Script endpoint
 - **Offline fallback** — Works fully without internet (no sync)
 

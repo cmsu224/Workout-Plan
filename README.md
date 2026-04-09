@@ -80,7 +80,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/.../exec";
 To use your own:
 1. Create a Google Sheet
 2. Deploy an Apps Script Web App that accepts `POST` requests and appends rows
-3. Replace `SCRIPT_URL` in `workout2.0.html` with your deployment URL
+3. Replace `SCRIPT_URL` in `js/app.js` with your deployment URL
 
 ---
 
@@ -107,17 +107,17 @@ To use your own:
 | Incline DB Flys | 3 | 12–15 |
 | Lateral Raises | 4 | 15–20 |
 | Skull Crushers | 3 | 12–15 |
-| Banded Pushdowns | 3 | 20 |
+| DB Overhead Extension | 3 | 12–15 |
 
 ### Pull
 | Exercise | Sets | Rep Range |
 |---|---|---|
 | Pull-Ups | 4 | Max |
 | One-Arm Row | 3 | 8–10 |
-| DB Pullovers | 3 | 12–15 |
+| Face Pulls | 3 | 15–20 |
 | Rear Delt Flys | 4 | 15–20 |
 | Bicep Curls | 3 | 10–12 |
-| Hammer Curls | 3 | 12 |
+| Hammer Curls | 3 | 10–12 |
 
 ### Legs
 | Exercise | Sets | Rep Range |
@@ -125,7 +125,7 @@ To use your own:
 | Goblet Squats | 4 | 10–12 |
 | Bulgarian Splits | 3 | 8–12 |
 | DB RDLs | 4 | 10–12 |
-| DB Lunges | 3 | 20 |
+| DB Hip Thrusts | 3 | 12–15 |
 | Calf Raises | 5 | 15–20 |
 
 ### Vacation (Full Body)

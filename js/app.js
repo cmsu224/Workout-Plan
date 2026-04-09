@@ -5,17 +5,17 @@ const animationFiles = {
     "Incline DB Flys": "incline_db_flys.svg",
     "Lateral Raises": "lateral_raises.svg",
     "Skull Crushers": "skull_crushers.svg",
-    "Banded Pushdowns": "banded_pushdowns.svg",
+    "DB Overhead Extension": "db_overhead_extension.svg",
     "Pull-Ups": "pull_ups.svg",
     "One-Arm Row": "one_arm_row.svg",
-    "DB Pullovers": "db_pullovers.svg",
+    "Face Pulls": "face_pulls.svg",
     "Rear Delt Flys": "rear_delt_flys.svg",
     "Bicep Curls": "bicep_curls.svg",
     "Hammer Curls": "hammer_curls.svg",
     "Goblet Squats": "goblet_squats.svg",
     "Bodyweight Squats": "bodyweight_squats.svg",
     "Bulgarian Splits": "bulgarian_splits.svg",
-    "DB Lunges": "db_lunges.svg",
+    "DB Hip Thrusts": "db_hip_thrusts.svg",
     "Lunges": "lunges.svg",
     "DB RDLs": "db_rdls.svg",
     "Calf Raises": "calf_raises.svg",
@@ -56,21 +56,21 @@ const gymWorkouts = {
         { name: "Incline DB Flys", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/1643/a6a603e9-a83a-4106-92a7-7d32e1b64c68.webp", search: "incline dumbbell fly" },
         { name: "Lateral Raises", sets: 4, range: "15-20", img: "https://wger.de/media/exercise-images/148/lateral-dumbbell-raises-large-2.png", search: "lateral raises" },
         { name: "Skull Crushers", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/84/Lying-close-grip-triceps-press-to-chin-1.png", search: "skull crushers" },
-        { name: "Banded Pushdowns", sets: 3, range: "20", img: "https://wger.de/media/exercise-images/1185/c5ca283d-8958-4fd8-9d59-a3f52a3ac66b.jpg", search: "tricep pushdown" }
+        { name: "DB Overhead Extension", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/84/Lying-close-grip-triceps-press-to-chin-1.png", search: "dumbbell overhead tricep extension" }
     ],
     "Pull": [
         { name: "Pull-Ups", sets: 4, range: "Max", img: "https://wger.de/media/exercise-images/475/b0554016-16fd-4dbe-be47-a2a17d16ae0e.jpg", search: "pull ups" },
         { name: "One-Arm Row", sets: 3, range: "8-10", img: "https://wger.de/media/exercise-images/81/a751a438-ae2d-4751-8d61-cef0e9292174.png", search: "one arm dumbbell row" },
-        { name: "DB Pullovers", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/192/Bench-press-1.png", search: "dumbbell pullover" },
+        { name: "Face Pulls", sets: 3, range: "15-20", img: "https://wger.de/media/exercise-images/829/ad724e5c-b1ed-49e8-9279-a17545b0dd0b.png", search: "face pull resistance band" },
         { name: "Rear Delt Flys", sets: 4, range: "15-20", img: "https://wger.de/media/exercise-images/829/ad724e5c-b1ed-49e8-9279-a17545b0dd0b.png", search: "rear delt fly" },
         { name: "Bicep Curls", sets: 3, range: "10-12", img: "https://wger.de/media/exercise-images/81/Biceps-curl-1.png", search: "dumbbell bicep curl" },
-        { name: "Hammer Curls", sets: 3, range: "12", img: "https://wger.de/media/exercise-images/86/Bicep-hammer-curl-1.png", search: "hammer curl" }
+        { name: "Hammer Curls", sets: 3, range: "10-12", img: "https://wger.de/media/exercise-images/86/Bicep-hammer-curl-1.png", search: "hammer curl" }
     ],
     "Legs": [
         { name: "Goblet Squats", sets: 4, range: "10-12", img: "https://wger.de/media/exercise-images/203/1c052351-2af0-4227-aeb0-244008e4b0a8.jpeg", search: "goblet squat" },
         { name: "Bulgarian Splits", sets: 3, range: "8-12", img: "https://wger.de/media/exercise-images/1706/0c5243cc-2539-4005-aee0-d3a8c5d3a32c.jfif", search: "bulgarian split squat" },
         { name: "DB RDLs", sets: 4, range: "10-12", img: "https://wger.de/media/exercise-images/1652/0306c8c0-70cc-45d4-92de-6fa72ceaa834.webp", search: "dumbbell romanian deadlift" },
-        { name: "DB Lunges", sets: 3, range: "20", img: "https://wger.de/media/exercise-images/113/Walking-lunges-1.png", search: "dumbbell lunge" },
+        { name: "DB Hip Thrusts", sets: 3, range: "12-15", img: "https://wger.de/media/exercise-images/1652/0306c8c0-70cc-45d4-92de-6fa72ceaa834.webp", search: "dumbbell hip thrust" },
         { name: "Calf Raises", sets: 5, range: "15-20", img: "https://wger.de/media/exercise-images/622/9a429bd0-afd3-4ad0-8043-e9beec901c81.jpeg", search: "standing calf raise" }
     ]
 };
